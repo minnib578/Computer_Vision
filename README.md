@@ -226,13 +226,74 @@ deeper models are harder to optimize--> A solution by construction is copying th
 
 ![image](https://user-images.githubusercontent.com/63558665/120123268-dd210900-c17b-11eb-8d03-1cb5d374593f.png)
 
-### 7) RNN
-* application: image caption/action prediction/Video Captioning/ Video classification on frame level
+### 7) RNN: 
+* application: 
+   * image caption: one to many
+   * action prediction: many to one
+   * Video Captioning: many to many
+   * Video classification on frame level:many to many
+   * Visual Question Answering (VQA)
+   * Visual Question Answering: RNNs with Attention
+   * Visual Dialog: Conversations about images
+   * Visual Language Navigation: Go to the living room
+   * Visual Question Answering: Dataset Bias
+* Why not existing convnet?
+Variable sequence length inputs and outputs! --> input and output are also variable
 
+* RNN: RNNs have an “internal state” that is updated as a sequence is processed
+1. hidden state update: h_t=fw(h_t_1,x)
+
+![image](https://user-images.githubusercontent.com/63558665/120261845-bdb2da80-c266-11eb-9248-3ec140e39bc2.png)
+
+2.Output generation:y_t=f(h_t)
+
+![image](https://user-images.githubusercontent.com/63558665/120261951-f488f080-c266-11eb-806e-b05f191475a8.png)
+
+Notice: the same function and the same set of parameters are used at every time step.
+
+sequence to sequence :many to one (encoder)-->one to many (decoder)
+
+![image](https://user-images.githubusercontent.com/63558665/120262874-96f5a380-c268-11eb-8b68-aa3d1cd1e00a.png)
+
+Carry hidden states forward in time forever, but only backpropagate for some smaller number of steps.Re-use the same weight matrix at every time-step
 ![image](https://user-images.githubusercontent.com/63558665/120123592-b2d04b00-c17d-11eb-89ce-c0f7fd4d0b66.png)
-1.Re-use the same weight matrix at every time-step
-2. many -->many 
 
+RNN Advantages:
+- Can process any length input
+- Computation for step t can (in theory) use information from many steps
+back
+- Model size doesn’t increase for longer input
+- Same weights applied on every timestep, so there is symmetry in how
+inputs are processed.
+RNN Disadvantages:
+- Recurrent computation is slow
+- In practice, difficult to access information from many steps back
+
+* Multiple layers RNN:
+
+![image](https://user-images.githubusercontent.com/63558665/120263949-c0afca00-c26a-11eb-95e1-acd51036e1f0.png)
+
+* LSTM: RNN-->vanishing gradient
+
+![image](https://user-images.githubusercontent.com/63558665/120264411-bcd07780-c26b-11eb-99bc-cd7d87bb3ce6.png)
+
+![image](https://user-images.githubusercontent.com/63558665/120264441-cfe34780-c26b-11eb-815c-996ecdef1ff7.png)
+
+![image](https://user-images.githubusercontent.com/63558665/120264615-28b2e000-c26c-11eb-8f5e-f79b7b715b16.png)
+![image](https://user-images.githubusercontent.com/63558665/120264629-2ea8c100-c26c-11eb-9040-6bcc8dac51a5.png)
+Notice that the gradient contains the f gate’s vector of activations
+- allows better control of gradients values, using suitable parameter updates of the
+forget gate.
+Also notice that are added through the f, i, g, and o gates
+- better balancing of gradient values
+The LSTM architecture makes it easier for the RNN to preserve information over many timesteps
+- e.g. if the f = 1 and the i = 0, then the information of that cell is preserved
+indefinitely.
+- By contrast, it’s harder for vanilla RNN to learn a recurrent weight matrix Wh that preserves info in hidden state
+LSTM doesn’t guarantee that there is no vanishing/exploding gradient, but it does provide an easier way for the model to learn long-distance dependencies
+Uninterrupt gradient/Use variants like GRU if you want faster compute and less parameters
+Common to use LSTM or GRU: their additive interactions improve gradient flow  Backward flow of gradients in RNN can explode or vanish. Exploding is controlled with gradient clipping. Vanishing is controlled with additive interactions (LSTM)
+Better/simpler architectures are a hot topic of current research, as well as new paradigms for reasoning over sequences
 ![image](https://user-images.githubusercontent.com/63558665/120123662-18243c00-c17e-11eb-953e-df597f42170d.png)
 
 many-->one: : Encode input sequence in a single vector
