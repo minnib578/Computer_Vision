@@ -12,7 +12,7 @@ Application:
 * activity recognition
 
 
-### 1) Image classification:
+#  Image classification:
 * what is image classification?
 Image classification is the process of categorizing and labeling groups of pixels or vectors within an image based on specific rule
 
@@ -54,7 +54,7 @@ Image classification is the process of categorizing and labeling groups of pixel
           * cross_validation:split data into folds,try each fols as validation and average the results (useful for small datasets),computation expensive-->validation approach.
           * Choose hyperparameters using the validation set;
 
-### 2) linear classification: y=f(x,w)=wx+b0
+# linear classification: y=f(x,w)=wx+b0
    
    ![image](https://user-images.githubusercontent.com/63558665/120711764-c20d0c80-c48d-11eb-8bcc-d2c360303188.png)
 
@@ -110,7 +110,7 @@ likelihood of the observed data
          * startegy 2: follow the slope-->gradient descent
     Three loss function: linear loss, SVM loss, softmax and data loss_reguralization     
         
-### 3) neural network-multiple layers neural network
+# Neural network-multiple layers neural network
 linear classifier is not useful and can only draw  linear decision boundaries-->featuere transformation: f(x, y) = (r(x, y), θ(x, y))
 
    ![image](https://user-images.githubusercontent.com/63558665/120117682-54df3b80-c15c-11eb-9cbc-26906f99b548.png)
@@ -143,7 +143,7 @@ power than linear classifiers
 - backward: apply the chain rule to compute he gradient of the loss function with respect to the inputs
 
 
-### 4) linear classifier--> multiple layers neural network-->covolution network
+# linear classifier--> multiple layers neural network-->covolution network
    
    ![image](https://user-images.githubusercontent.com/63558665/120119457-cc659880-c165-11eb-8f05-5f72a60b3440.png)
    ![image](https://user-images.githubusercontent.com/63558665/120119468-d4253d00-c165-11eb-9a37-22f349719691.png)
@@ -162,16 +162,45 @@ power than linear classifiers
    ![image](https://user-images.githubusercontent.com/63558665/120119992-bf967400-c168-11eb-8adb-b38fb349403b.png)
    padding:control the spatial size of the output volumes,most commonly as we’ll see soon we will use it to exactly preserve the spatial size of the input volume so the input and output width and height are the same
    
-### 5) training
-* one time setup
+# Convolutional Neural Networks and training
+Detection and segmentation，classification,image caption, style transfer learning
+
+* Fully connect layer:
+
+ ![image](https://user-images.githubusercontent.com/63558665/120720682-83318380-c49a-11eb-908e-b765b866451d.png)
+
+* convolution layer: 
+       * preserve spatial structure,convolve (slide) over all spatial locations
+       * different filter for different features extraction
+       * low level features--> high level features-->linear separable classifier
+       * 1x1 convolution reduce diemsnion with few parameters
+* convolution Layer change:
+ output size: (N - F) / stride + 1     (N + 2P - F) / stride + 1
+ parameters: F2CK+k
+ 
+* pooling layer: makes the representations smaller and more manageable, downsample,operates over each activation map independently
+        * Maxpooling
+        * global pooling
+        * average pooling
+             
+number of parameters is 0
+* tips:
+        * Trend towards smaller filters and deeper architectures
+        * Trend towards getting rid of POOL/FC layers (just CONV)
+        * conv-->ReLu-->pool-->softmax
+        * 
+# Training
+* one time setup: activation functions, preprocessing, weight initialization, regularization, gradient checking
       * activation function
             * sigmoid:
-                       * Saturated neurons “kill” the gradients (-inf,0,inf)--> the gradients flowing back will be zero and weights will never change
-                       * Sigmoid outputs are not zero-centered--> local gradient of sigmoid is always positive or negative-->zigzag
+                       * Saturated neurons “kill” the gradients (-inf,0 (delta(x)=1),inf)--> the gradients flowing back will be zero and weights will never change
+                       * Sigmoid outputs are not zero-centered (output>0)--> local gradient of sigmoid is always positive or negative-->zigzag
                        * exp() computation expensive
+                       * Always all positive or all negative-->zig zag path
              * Tanh:
                        * Saturated neurons “kill” the gradients (-inf,0,inf)--> the gradients flowing back will be zero and weights will never change
                        * Sigmoid outputs are zero-centered (nice)
+                       * Squashes numbers to range [-1,1]
              * ReLU:
                        * not saturate (in +region)
                        * computation efficiently
@@ -179,7 +208,7 @@ power than linear classifiers
                        * not zero-centered output
                        * an annoyance
                        * Dead ReLU will never activate and no update weight
-              * LeakyReLU:
+              * LeakyReLU: f(x)=max(0.001x,x)
                        * not saturate (in +region)
                        * computation efficiently
                        * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
@@ -191,7 +220,19 @@ power than linear classifiers
                        * closer to zero mean output
                        * negative saturation regime compared with Leakly ReLU add some robutness to noise
                        * computation require exp()
-            using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
+                * Parametric Rectifier（PReLU)
+                          f(x)=max(ax,x)
+                * Scaled Exponential Linear Units (SELU): scale the output
+                       * Scaled versionof ELU that works better for deep networks
+                       * “Self-normalizing” property
+                       * Can train deep SELU networks without BatchNorm
+                       * computation require exp()
+                 * Maxout “Neuron”
+                       * Does not have the basic form of dot product ->nonlinearity
+                       * Generalizes ReLU and Leaky ReLU
+                       * Linear Regime! Does not saturate! Does not die!
+                       * Problem: doubles the number of parameters/neuron
+       Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
       * preprocessing:consider what happends when the input to a neura is always positive--->zigzag path
                 * zero-mean data--> visualize data with PCA and Whitening
                         * substract the mean image(AlexNet)
