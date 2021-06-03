@@ -131,7 +131,17 @@ derive delta_w L on paper?
 * Very tedious: Lots of matrix calculus, need lots of paper
 * What if we want to change loss? E.g. use softmax instead of SVM? Need to re-derive from scratch
 * Not feasible for very complex models!
---> Backpropagation
+--> Backpropagation+ computational graph-->chain rule
+
+![image](https://user-images.githubusercontent.com/63558665/120716932-b8d36e00-c494-11eb-8a9d-c4a1c07826cd.png)
+
+● (Fully-connected) Neural Networks are stacks of linear functions and nonlinear activation functions; they have much more representational
+power than linear classifiers
+● backpropagation = recursive application of the chain rule along a computational graph to compute the gradients of all inputs/parameters/intermediates
+● implementations maintain a graph structure, where the nodes implement the forward() / backward() API
+● forward: compute result of an operation and save any intermediates needed for gradient computation in memory
+● backward: apply the chain rule to compute he gradient of the loss function with respect to the inputs
+
 
 ### 4) linear classifier--> multiple layers neural network-->covolution network
    
