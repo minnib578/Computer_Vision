@@ -320,6 +320,57 @@ one-->many: : Produce output sequence from single input vector
     * Getting insights from high-dimensional data (physics, medical imaging, etc.)
     * Modeling physical world for simulation and planning (robotics and reinforcement learning applications)
 
+![image](https://user-images.githubusercontent.com/63558665/120584659-621b5500-c3fe-11eb-8b5b-6a16248291db.png)
+
+* pixelRNN and PixelCNN
+ FVBN
+ 
+ ![image](https://user-images.githubusercontent.com/63558665/120584795-98f16b00-c3fe-11eb-9f6b-ee5405fb94f6.png)
+ 
+   * pixelRNN:Generate image pixels starting from corner and Dependency on previous pixels modeled using an RNN (LSTM)
+       
+       ![image](https://user-images.githubusercontent.com/63558665/120584918-d0f8ae00-c3fe-11eb-9087-7c408419bff2.png)
+
+        Drawback: sequential generation is slow in both training and inference!
+   * PixelCNN:Still generate image pixels starting from corner,Dependency on previous pixels now modeled using a CNN over context region
+         
+         ![image](https://user-images.githubusercontent.com/63558665/120585029-08675a80-c3ff-11eb-9aa1-f7c02331131e.png)
+
+      Training is faster than PixelRNN (can parallelize convolutions since context region values known from training images)
+      Generation is still slow: For a 32x32 image, we need to do forward passes of the network 1024 times for a single image
+
+![image](https://user-images.githubusercontent.com/63558665/120585049-11f0c280-c3ff-11eb-88db-0a3ca6f3496f.png)
+* VAE:Variational Autoencoders
+ 
+ ![image](https://user-images.githubusercontent.com/63558665/120585160-45cbe800-c3ff-11eb-941e-21711c12f057.png)
+ No dependencies among pixels, can generate all pixels at the same time!
+ Cannot optimize directly, derive and optimize lower bound on likelihood instead
+ trained autoencoder-->decoder-->extract feature :Transfer from large, unlabeled dataset to small, labeled dataset.
+ Autoencoders can reconstruct data, and can learn features to initialize a supervised model
+ Features capture factors of variation in training data. 
+ But we can’t generate new images from an autoencoder because we don’t know the space of z
+ ![image](https://user-images.githubusercontent.com/63558665/120585413-afe48d00-c3ff-11eb-801d-54ded05cd109.png)
+ Choose prior p(z) to be simple, e.g.Gaussian. Reasonable for latent attributes, e.g. pose, how much smile
+ 
+ ![image](https://user-images.githubusercontent.com/63558665/120585901-92fc8980-c400-11eb-823d-40ab9b13d120.png)
+
+ ![image](https://user-images.githubusercontent.com/63558665/120586079-dd7e0600-c400-11eb-814d-b578c9223a57.png)
 
 
+* Why dimensionality reduction?
+Want features to capture meaningful factors of variation in data
+
+* GANS: Sample from a simple distribution we can easily sample from, e.g. random noise.Learn transformation to training distribution.
+  But we don’t know which sample z maps to which training image -> can’t learn by reconstructing training images
+  Solution: Use a discriminator network to tell whether the generate image is within data distribution (“real”) or not
+  
+  Discriminator network: try to distinguish between real and fake images
+  Generator network: try to fool the discriminator by generating real-looking images
+  minmax game
+  Discriminator (θd) wants to maximize objective such that D(x) is close to 1 (real) and D(G(z)) is close to 0 (fake)
+  Generator (θg) wants to minimize objective such that D(G(z)) is close to 1 (discriminator is fooled into thinking generated G(z) is real)
+  ![image](https://user-images.githubusercontent.com/63558665/120586384-714fd200-c401-11eb-8590-c944d7c73f4d.png)
+  ![image](https://user-images.githubusercontent.com/63558665/120586592-cdb2f180-c401-11eb-88db-4964a8c29e15.png)
+  
+  ![image](https://user-images.githubusercontent.com/63558665/120586621-da374a00-c401-11eb-920b-5c5201c524cd.png)
 
