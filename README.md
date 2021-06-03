@@ -195,96 +195,105 @@ number of parameters is 0
    1. activation function
             
     * sigmoid:
-               * Saturated neurons “kill” the gradients (-inf,0 (delta(x)=1),inf)--> the gradients flowing back will be zero and weights will never change
-               * Sigmoid outputs are not zero-centered (output>0)--> local gradient of sigmoid is always positive or negative-->zigzag
-               * exp() computation expensive
-               * Always all positive or all negative-->zig zag path
+         * Saturated neurons “kill” the gradients (-inf,0 (delta(x)=1),inf)--> the gradients flowing back will be zero and weights will never change
+         * Sigmoid outputs are not zero-centered (output>0)--> local gradient of sigmoid is always positive or negative-->zigzag
+         * exp() computation expensive
+         * Always all positive or all negative-->zig zag path
      * Tanh:
-               * Saturated neurons “kill” the gradients (-inf,0,inf)--> the gradients flowing back will be zero and weights will never change
-               * Sigmoid outputs are zero-centered (nice)
-               * Squashes numbers to range [-1,1]
+         * Saturated neurons “kill” the gradients (-inf,0,inf)--> the gradients flowing back will be zero and weights will never change
+         * Sigmoid outputs are zero-centered (nice)
+         * Squashes numbers to range [-1,1]
      * ReLU:
-               * not saturate (in +region)
-               * computation efficiently
-               * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
-               * not zero-centered output
-               * an annoyance
-               * Dead ReLU will never activate and no update weight
+         * not saturate (in +region)
+         * computation efficiently
+         * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
+         * not zero-centered output
+         * an annoyance
+         * Dead ReLU will never activate and no update weight
       * LeakyReLU: f(x)=max(0.001x,x)
-               * not saturate (in +region)
-               * computation efficiently
-               * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
-               * not zero-centered output
-               * will not "die"
-               * need to manually setup a
+         * not saturate (in +region)
+         * computation efficiently
+         * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
+         * not zero-centered output
+         * will not "die"
+         * need to manually setup a
        * exponential Linear Units (ELU):
-               * all benefits of ReLU
-               * closer to zero mean output
-               * negative saturation regime compared with Leakly ReLU add some robutness to noise
-               * computation require exp()
-        * Parametric Rectifier（PReLU)
-                  f(x)=max(ax,x)
-        * Scaled Exponential Linear Units (SELU): scale the output
-               * Scaled versionof ELU that works better for deep networks
-               * “Self-normalizing” property
-               * Can train deep SELU networks without BatchNorm
-               * computation require exp()
-         * Maxout “Neuron”
-               * Does not have the basic form of dot product ->nonlinearity
-               * Generalizes ReLU and Leaky ReLU
-               * Linear Regime! Does not saturate! Does not die!
-               * Problem: doubles the number of parameters/neuron
+         * all benefits of ReLU
+         * closer to zero mean output
+         * negative saturation regime compared with Leakly ReLU add some robutness to noise
+         * computation require exp()
+       * Parametric Rectifier（PReLU)
+          f(x)=max(ax,x)
+       * Scaled Exponential Linear Units (SELU): scale the output
+           * Scaled versionof ELU that works better for deep networks
+           * “Self-normalizing” property
+           * Can train deep SELU networks without BatchNorm
+           * computation require exp()
+       * Maxout “Neuron”
+           * Does not have the basic form of dot product ->nonlinearity
+           * Generalizes ReLU and Leaky ReLU
+           * Linear Regime! Does not saturate! Does not die!
+           * Problem: doubles the number of parameters/neuron
 Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
-      2. preprocessing:consider what happends when the input to a neura is always positive--->zigzag path
-                * zero-mean data--> visualize data with PCA and Whitening
-                        * substract the mean image(AlexNet)
-                        * substract per-channel mean (VGGNet)
-                        * substract per-channel mean and divide by per-channel std (ResNet)
-                * normalization:Before normalization: classification loss very sensitive to changes in weight matrix; hard to optimize. After normalization: less sensitive to small changes in weights; easier to optimize
-      3. weight initialization:
-                 * small random numbers:(gaussian with zero mean and 1e-2 standard deviation)-->work with small network, but no deep network---> vanishing gradient-->no learning
-                 * “Xavier” Initialization: Activations are nicely scaled for all layers-->ReLU Activations collapse to zero again-->
+      
+   2. preprocessing:consider what happends when the input to a neura is always positive--->zigzag path
+        * zero-mean data--> visualize data with PCA and Whitening
+            * substract the mean image(AlexNet)
+            * substract per-channel mean (VGGNet)
+            * substract per-channel mean and divide by per-channel std (ResNet)
+        * normalization:Before normalization: classification loss very sensitive to changes in weight matrix; hard to optimize. After normalization: less sensitive to small changes in weights; easier to optimize
+      
+   3. weight initialization:
+        * small random numbers:(gaussian with zero mean and 1e-2 standard deviation)-->work with small network, but no deep network---> vanishing gradient-->no learning
+        * “Xavier” Initialization: Activations are nicely scaled for all layers-->ReLU Activations collapse to zero again-->
                      ![image](https://user-images.githubusercontent.com/63558665/120121487-c4135a80-c171-11eb-8561-d06a4b12ef89.png)
-                 * Kaiming/MSRA initilization
+         * Kaiming/MSRA initilization
                       ![image](https://user-images.githubusercontent.com/63558665/120121622-70554100-c172-11eb-992e-930fa4462046.png)
         depending on differnt activation function using differnt weight inilization
-      4. regularization: zero-mean unit-variance activationa and improve single model performance
-                  * batchnormalization: During testing batchnorm becomes a linear operator! Can be fused with the previous fully-connected or conv layer
-                       ![image](https://user-images.githubusercontent.com/63558665/120121738-1dc85480-c173-11eb-814f-616134640c4c.png)
-                        * Makes deep networks much easier to train!
-                        * Improves gradient flow
-                        * Allows higher learning rates, faster convergence
-                        * Networks become more robust to initialization
-                        * Acts as regularization during training
-                        * Zero overhead at test-time: can be fused with conv!
-                        * Behaves differently during training and testing: this is a very common source of bugs!
-                        * layer batchnormalization used in recurrent networks
-                        * instance normalization/group normalization
-                   * 
-                     ![image](https://user-images.githubusercontent.com/63558665/120122407-882ec400-c176-11eb-9a3a-d2856af4d60a.png)
-                   * dropout:In each forward pass, randomly set some neurons to zero Probability of dropping is a hyperparameter; 0.5 is common
-                        * Dropout is training a large ensemble of models (that share parameters).
-                        * Each binary mask is one model
-                        * drop in train and scale in test
-                    * data augmentation:
-                        * Random crops and scales
-                        * Color Jitter
-                        * translation/rotation/stretching/shearing/lens distortions/Cutout/random crop/mixup
-                        * add random noise
-                     * Dropconnect: Drop connections between neurons (set weights to 0)
-                     * Fractional Pooling:Use randomized pooling regions
-                     * stochastic depth: Skip some layers in the network
-Consider dropout for large-->fully-connected layers
-Batch normalization and data augmentation almost always a good idea
-Try cutout and mixup especially for small classification datasets
-* Training Dynamics  
-       * babysitting the learning process
-                        * Learning rate decays over time/cosine/linear
+      
+   4. regularization: zero-mean unit-variance activationa and improve single model performance
+        * batchnormalization: During testing batchnorm becomes a linear operator! Can be fused with the previous fully-connected or conv layer
+             ![image](https://user-images.githubusercontent.com/63558665/120121738-1dc85480-c173-11eb-814f-616134640c4c.png)
+            * Makes deep networks much easier to train!
+            * Improves gradient flow
+            * Allows higher learning rates, faster convergence
+            * Networks become more robust to initialization
+            * Acts as regularization during training
+            * Zero overhead at test-time: can be fused with conv!
+            * Behaves differently during training and testing: this is a very common source of bugs!
+            * layer batchnormalization used in recurrent networks
+            * instance normalization/group normalization
+            
+              ![image](https://user-images.githubusercontent.com/63558665/120122407-882ec400-c176-11eb-9a3a-d2856af4d60a.png)
+           
+        * dropout:In each forward pass, randomly set some neurons to zero Probability of dropping is a hyperparameter; 0.5 is common
+            * Dropout is training a large ensemble of models (that share parameters).
+            * Each binary mask is one model
+            * drop in train and scale in test
+        * data augmentation:
+            * Random crops and scales
+            * Color Jitter
+            * translation/rotation/stretching/shearing/lens distortions/Cutout/random crop/mixup
+            * add random noise
+       * Dropconnect: Drop connections between neurons (set weights to 0)
+       * Fractional Pooling:Use randomized pooling regions
+       * stochastic depth: Skip some layers in the network
+    
+   5. Summary:
+        * Consider dropout for large-->fully-connected layers
+        * Batch normalization and data augmentation almost always a good idea
+        * Try cutout and mixup especially for small classification datasets
+        * Training Dynamics  
+        * babysitting the learning process
+             * Learning rate decays over time/cosine/linear
                             ![image](https://user-images.githubusercontent.com/63558665/120122292-e1e2be80-c175-11eb-8ddc-0cca78a8a650.png)
-        Adam is a good default choice in many cases; it often works ok even with constant learning rate.SGD+Momentum can outperform Adam but mayrequire more tuning of LR and schedule-->Try cosine schedule, very few hyperparameters! If you can afford to do full batch updates then try out-->L-BFGS (and don’t forget to disable all sources of noise)
+        * Adam is a good default choice in many cases; it often works ok even with constant learning rate.SGD+Momentum can outperform Adam but mayrequire more tuning of LR and schedule-->Try cosine schedule, very few hyperparameters! If you can afford to do full batch updates then try out-->L-BFGS (and don’t forget to disable all sources of noise)
         * parameters update, hyperparameter optimization
-           ![image](https://user-images.githubusercontent.com/63558665/120122603-cb3d6700-c177-11eb-9539-f6b9c98211b3.png)
-         * early stop
+           
+             ![image](https://user-images.githubusercontent.com/63558665/120122603-cb3d6700-c177-11eb-9539-f6b9c98211b3.png)
+           
+        * early stop
+        
 * Evaluation：
        * model ensembles: Train multiple independent models,At test time average their results
        * test-time augmentation
