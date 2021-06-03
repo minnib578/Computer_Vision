@@ -58,22 +58,35 @@ Image classification is the process of categorizing and labeling groups of pixel
    
    ![image](https://user-images.githubusercontent.com/63558665/120711764-c20d0c80-c48d-11eb-8bcc-d2c360303188.png)
 
-* Loss:
+* Loss: Define a loss function that quantifies our unhappiness with the scores across the training data. Come up with a way of
+efficiently finding the parameters that minimize the loss function. (optimization)
 
-     ![image](https://user-images.githubusercontent.com/63558665/120116601-d6cc6600-c156-11eb-8826-46c3bdeca9d0.png)
+   ![image](https://user-images.githubusercontent.com/63558665/120116601-d6cc6600-c156-11eb-8826-46c3bdeca9d0.png)
       
-     * SVM loss: 错误分类更高的分数，正确分类 is 0 l1 and l2 SVM loss
-          ![image](https://user-images.githubusercontent.com/63558665/120117034-257aff80-c159-11eb-9ced-793c3a178ba3.png)
-          ![image](https://user-images.githubusercontent.com/63558665/120116958-d6cd6580-c158-11eb-9dde-6916a3e0287c.png)
+   * SVM loss: 错误分类更高的分数，正确分类 is 0, l1 and l2 SVM loss:difference in score between correct and incorrect class
+          
+       ![image](https://user-images.githubusercontent.com/63558665/120117034-257aff80-c159-11eb-9ced-793c3a178ba3.png)
+          
+       ![image](https://user-images.githubusercontent.com/63558665/120116958-d6cd6580-c158-11eb-9dde-6916a3e0287c.png)
+       
        questions:
-           * if the correct score decrease maybe not affect the loss
+           * if the correct score decrease maybe not affect the loss--> loss may not change
+           * what is min/max loss-->min:0 and max:infinite
            * at inilization, weight is small so all s about to 0
+           * sum of loss or mean of loss or square of loss?
            * whether w is unique? it is no unique w=2w and L=0---> which is better w or 2w?--->reguralization
-      * regularization:
+           * The same output with different weight and how to determine which is better?<--reguralization 
+           
+        ![image](https://user-images.githubusercontent.com/63558665/120713457-ebc73300-c48f-11eb-851f-4e1b608317fd.png)
+
+
+      * Regularization:Prevent the model from doing too well on training data
+           
            ![image](https://user-images.githubusercontent.com/63558665/120117062-522f1700-c159-11eb-9c99-b09383b1de6b.png)
-            * methods:
+            
+           * methods:
                 ![image](https://user-images.githubusercontent.com/63558665/120117110-9de1c080-c159-11eb-8795-d6ed8875a0ef.png)
-             * why?
+            * why?
                   * Express preferneces over weights
                   * make the model simple so it works test data
                   * improve optimization by adding curvature
