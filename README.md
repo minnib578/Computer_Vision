@@ -191,7 +191,7 @@ number of parameters is 0
         * 
 # Training
 * one time setup: activation functions, preprocessing, weight initialization, regularization, gradient checking
-      * activation function
+      1. activation function
             * sigmoid:
                        * Saturated neurons “kill” the gradients (-inf,0 (delta(x)=1),inf)--> the gradients flowing back will be zero and weights will never change
                        * Sigmoid outputs are not zero-centered (output>0)--> local gradient of sigmoid is always positive or negative-->zigzag
@@ -233,20 +233,20 @@ number of parameters is 0
                        * Linear Regime! Does not saturate! Does not die!
                        * Problem: doubles the number of parameters/neuron
        Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
-      * preprocessing:consider what happends when the input to a neura is always positive--->zigzag path
+      2. preprocessing:consider what happends when the input to a neura is always positive--->zigzag path
                 * zero-mean data--> visualize data with PCA and Whitening
                         * substract the mean image(AlexNet)
                         * substract per-channel mean (VGGNet)
                         * substract per-channel mean and divide by per-channel std (ResNet)
                 * normalization:Before normalization: classification loss very sensitive to changes in weight matrix; hard to optimize. After normalization: less sensitive to small changes in weights; easier to optimize
-      * weight initialization:
+      3. weight initialization:
                  * small random numbers:(gaussian with zero mean and 1e-2 standard deviation)-->work with small network, but no deep network---> vanishing gradient-->no learning
                  * “Xavier” Initialization: Activations are nicely scaled for all layers-->ReLU Activations collapse to zero again-->
                      ![image](https://user-images.githubusercontent.com/63558665/120121487-c4135a80-c171-11eb-8561-d06a4b12ef89.png)
                  * Kaiming/MSRA initilization
                       ![image](https://user-images.githubusercontent.com/63558665/120121622-70554100-c172-11eb-992e-930fa4462046.png)
         depending on differnt activation function using differnt weight inilization
-      * regularization: zero-mean unit-variance activationa and improve single model performance
+      4. regularization: zero-mean unit-variance activationa and improve single model performance
                   * batchnormalization: During testing batchnorm becomes a linear operator! Can be fused with the previous fully-connected or conv layer
                        ![image](https://user-images.githubusercontent.com/63558665/120121738-1dc85480-c173-11eb-814f-616134640c4c.png)
                         * Makes deep networks much easier to train!
