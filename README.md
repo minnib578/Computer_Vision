@@ -111,11 +111,13 @@ likelihood of the observed data
     Three loss function: linear loss, SVM loss, softmax and data loss_reguralization     
         
 ### 3) neural network-multiple layers neural network
-   
+linear classifier is not useful and can only draw  linear decision boundaries-->featuere transformation: f(x, y) = (r(x, y), θ(x, y))
+
    ![image](https://user-images.githubusercontent.com/63558665/120117682-54df3b80-c15c-11eb-9cbc-26906f99b548.png)
 
    ![image](https://user-images.githubusercontent.com/63558665/120117694-6294c100-c15c-11eb-8fc0-13958b764a2d.png)
-   why activation?--> W2*W1=W3  end up with linear classifier again!
+  
+  why activation?--> W2*W1=W3  end up with linear classifier again!
    
    ![image](https://user-images.githubusercontent.com/63558665/120117745-ab4c7a00-c15c-11eb-8a22-2ff3352efbe1.png)
    ![image](https://user-images.githubusercontent.com/63558665/120117758-b6070f00-c15c-11eb-8bf9-efc7eb33bcd4.png)
