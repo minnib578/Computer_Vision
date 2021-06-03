@@ -11,13 +11,20 @@ Application:
 * human pose estimation
 * activity recognition
 
+
 ### 1) Image classification:
 * what is image classification?
 Image classification is the process of categorizing and labeling groups of pixels or vectors within an image based on specific rule
+
+- K-Nearest Neighbor
+- Linear classifiers: SVM, Softmax
+- Two-layer neural network
+- Image features
+
 * challenges for image classification?
    * viewpoint variation: all pixels change when the camera moves
    * background cluster: objects are similar to the background (color or texture)
-   * illumination: (too dark or too light)
+   * illumination: (too dark or too light)-->data driven x
    * occlusion: hiden by other objects
    * deformation: different shape/pose of the same objects
    * intraclass variation:differnt types of the same object
