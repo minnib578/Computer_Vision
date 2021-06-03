@@ -246,9 +246,13 @@ Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try ou
    3. weight initialization:
         * small random numbers:(gaussian with zero mean and 1e-2 standard deviation)-->work with small network, but no deep network---> vanishing gradient-->no learning
         * “Xavier” Initialization: Activations are nicely scaled for all layers-->ReLU Activations collapse to zero again-->
-                     ![image](https://user-images.githubusercontent.com/63558665/120121487-c4135a80-c171-11eb-8561-d06a4b12ef89.png)
+                     
+             ![image](https://user-images.githubusercontent.com/63558665/120121487-c4135a80-c171-11eb-8561-d06a4b12ef89.png)
+             
          * Kaiming/MSRA initilization
-                      ![image](https://user-images.githubusercontent.com/63558665/120121622-70554100-c172-11eb-992e-930fa4462046.png)
+         
+              ![image](https://user-images.githubusercontent.com/63558665/120121622-70554100-c172-11eb-992e-930fa4462046.png)
+              
         depending on differnt activation function using differnt weight inilization
       
    4. regularization: zero-mean unit-variance activationa and improve single model performance
@@ -287,6 +291,7 @@ Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try ou
         * babysitting the learning process
              * Learning rate decays over time/cosine/linear
                             ![image](https://user-images.githubusercontent.com/63558665/120122292-e1e2be80-c175-11eb-8ddc-0cca78a8a650.png)
+                            
         * Adam is a good default choice in many cases; it often works ok even with constant learning rate.SGD+Momentum can outperform Adam but mayrequire more tuning of LR and schedule-->Try cosine schedule, very few hyperparameters! If you can afford to do full batch updates then try out-->L-BFGS (and don’t forget to disable all sources of noise)
         * parameters update, hyperparameter optimization
            
@@ -295,17 +300,21 @@ Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try ou
         * early stop
         
 * Evaluation：
-       * model ensembles: Train multiple independent models,At test time average their results
-       * test-time augmentation
-       * transfer learning
-                   * Lower learning rate when finetuning; 1/10 of original LR is good starting point
-                   * With bigger dataset, train more layers
-                   ![image](https://user-images.githubusercontent.com/63558665/120121953-13f32100-c174-11eb-9ed4-ad345d1f13b6.png)
-                   ![image](https://user-images.githubusercontent.com/63558665/120122009-3f760b80-c174-11eb-8ced-bc8ab1c32ab5.png)
-                    * They also find that collecting more data is better than finetuning on a related task
+     * model ensembles: Train multiple independent models,At test time average their results
+     * test-time augmentation
+     * transfer learning
+         * Lower learning rate when finetuning; 1/10 of original LR is good starting point
+         * With bigger dataset, train more layers
+
+              ![image](https://user-images.githubusercontent.com/63558665/120121953-13f32100-c174-11eb-9ed4-ad345d1f13b6.png)
+                 
+              ![image](https://user-images.githubusercontent.com/63558665/120122009-3f760b80-c174-11eb-8ced-bc8ab1c32ab5.png)
+             
+          * They also find that collecting more data is better than finetuning on a related task
  
-![image](https://user-images.githubusercontent.com/63558665/120122057-8d8b0f00-c174-11eb-8de9-fc32da67cbd0.png)
-![image](https://user-images.githubusercontent.com/63558665/120122614-e3ad8180-c177-11eb-8f22-5cca118038b5.png)
+            ![image](https://user-images.githubusercontent.com/63558665/120122057-8d8b0f00-c174-11eb-8de9-fc32da67cbd0.png)
+
+            ![image](https://user-images.githubusercontent.com/63558665/120122614-e3ad8180-c177-11eb-8f22-5cca118038b5.png)
 
 ### 6) CNN architecture
 * LeNet-5
