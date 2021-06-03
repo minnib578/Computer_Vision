@@ -191,48 +191,50 @@ number of parameters is 0
         * 
 # Training
 * one time setup: activation functions, preprocessing, weight initialization, regularization, gradient checking
-      1. activation function
-            * sigmoid:
-                       * Saturated neurons “kill” the gradients (-inf,0 (delta(x)=1),inf)--> the gradients flowing back will be zero and weights will never change
-                       * Sigmoid outputs are not zero-centered (output>0)--> local gradient of sigmoid is always positive or negative-->zigzag
-                       * exp() computation expensive
-                       * Always all positive or all negative-->zig zag path
-             * Tanh:
-                       * Saturated neurons “kill” the gradients (-inf,0,inf)--> the gradients flowing back will be zero and weights will never change
-                       * Sigmoid outputs are zero-centered (nice)
-                       * Squashes numbers to range [-1,1]
-             * ReLU:
-                       * not saturate (in +region)
-                       * computation efficiently
-                       * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
-                       * not zero-centered output
-                       * an annoyance
-                       * Dead ReLU will never activate and no update weight
-              * LeakyReLU: f(x)=max(0.001x,x)
-                       * not saturate (in +region)
-                       * computation efficiently
-                       * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
-                       * not zero-centered output
-                       * will not "die"
-                       * need to manually setup a
-               * exponential Linear Units (ELU):
-                       * all benefits of ReLU
-                       * closer to zero mean output
-                       * negative saturation regime compared with Leakly ReLU add some robutness to noise
-                       * computation require exp()
-                * Parametric Rectifier（PReLU)
-                          f(x)=max(ax,x)
-                * Scaled Exponential Linear Units (SELU): scale the output
-                       * Scaled versionof ELU that works better for deep networks
-                       * “Self-normalizing” property
-                       * Can train deep SELU networks without BatchNorm
-                       * computation require exp()
-                 * Maxout “Neuron”
-                       * Does not have the basic form of dot product ->nonlinearity
-                       * Generalizes ReLU and Leaky ReLU
-                       * Linear Regime! Does not saturate! Does not die!
-                       * Problem: doubles the number of parameters/neuron
-       Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
+      
+   1. activation function
+            
+    * sigmoid:
+               * Saturated neurons “kill” the gradients (-inf,0 (delta(x)=1),inf)--> the gradients flowing back will be zero and weights will never change
+               * Sigmoid outputs are not zero-centered (output>0)--> local gradient of sigmoid is always positive or negative-->zigzag
+               * exp() computation expensive
+               * Always all positive or all negative-->zig zag path
+     * Tanh:
+               * Saturated neurons “kill” the gradients (-inf,0,inf)--> the gradients flowing back will be zero and weights will never change
+               * Sigmoid outputs are zero-centered (nice)
+               * Squashes numbers to range [-1,1]
+     * ReLU:
+               * not saturate (in +region)
+               * computation efficiently
+               * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
+               * not zero-centered output
+               * an annoyance
+               * Dead ReLU will never activate and no update weight
+      * LeakyReLU: f(x)=max(0.001x,x)
+               * not saturate (in +region)
+               * computation efficiently
+               * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
+               * not zero-centered output
+               * will not "die"
+               * need to manually setup a
+       * exponential Linear Units (ELU):
+               * all benefits of ReLU
+               * closer to zero mean output
+               * negative saturation regime compared with Leakly ReLU add some robutness to noise
+               * computation require exp()
+        * Parametric Rectifier（PReLU)
+                  f(x)=max(ax,x)
+        * Scaled Exponential Linear Units (SELU): scale the output
+               * Scaled versionof ELU that works better for deep networks
+               * “Self-normalizing” property
+               * Can train deep SELU networks without BatchNorm
+               * computation require exp()
+         * Maxout “Neuron”
+               * Does not have the basic form of dot product ->nonlinearity
+               * Generalizes ReLU and Leaky ReLU
+               * Linear Regime! Does not saturate! Does not die!
+               * Problem: doubles the number of parameters/neuron
+Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
       2. preprocessing:consider what happends when the input to a neura is always positive--->zigzag path
                 * zero-mean data--> visualize data with PCA and Whitening
                         * substract the mean image(AlexNet)
