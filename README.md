@@ -31,25 +31,33 @@ Image classification is the process of categorizing and labeling groups of pixel
    * scale variation:Visual classes often exhibit variation in their siz
  
  * data-driven methods: k and distance choised, evaluation methods
-   * Nearest Neighbor classifier:The nearest neighbor classifier will take a test image, compare it to every single one of the training images, and predict the label of the closest training image.One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors I1,I2 , a reasonable choice for comparing them might be the L1 distance.
+   * Nearest Neighbor classifier:The nearest neighbor classifier will take a test image, compare it to every single one of the training images, and predict the label of the closest training image.One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors I1,I2 , a reasonable choice for comparing them might be the L1 distance: (Manhattan) distance. vectoriation calculation
          
         ![image](https://user-images.githubusercontent.com/63558665/120114755-a7b1f680-c14e-11eb-9122-f4c75d58a0b4.png)
      
-     L2 distance:
-         ![image](https://user-images.githubusercontent.com/63558665/120114899-4f2f2900-c14f-11eb-8e70-00fdf0e263e5.png)
-           * ad: simple to implement and understand, no need to training
-           * disad:computation cost
+     L2 distance:(Euclidean) distance
+     
+        ![image](https://user-images.githubusercontent.com/63558665/120114899-4f2f2900-c14f-11eb-8e70-00fdf0e263e5.png)
+         
+       * ad: simple to implement and understand, no need to training
+       * disad:computation cost, slow for training is ok, but we want fast prediction-->real time 
+    
     * k-nearest neighbor classifier:instead of finding the single closest image in the training set, we will find the top k closest images, and have them vote on the label of the test image. when k==1, it is nearest neghbor classifier. knn with pixel distance never used because it is sensitive to lighting, and distance metrics on pixels are not informative.
-           * disad: The classifier must remember all of the training data and store it for future comparisons with the test data. This is space inefficient because datasets may easily be gigabytes in size. Classifying a test image is expensive since it requires a comparison to all training images.
+        * disad: The classifier must remember all of the training data and store it for future comparisons with the test data. This is space inefficient because datasets may easily be gigabytes in size. Classifying a test image is expensive since it requires a comparison to all training images.
+        * how to choose K and how to choose distance metric?--->choose hyperparameters working well,when K = 1 always works perfectly on training data-->Split data into train, val; choose hyperparameters on val and evaluate on test
+        * k-Nearest Neighbor with pixel distance never used because Distance metrics on pixels are not informative and slow<-- light change affect performance
        
        ![image](https://user-images.githubusercontent.com/63558665/120115147-63bff100-c150-11eb-8425-4d92a49cdcff.png)
-     * tuning hyperparameters:
+       
+     * Tuning hyperparameters:
           * validation: split the training dataset into training and validation and evaluate the model on test set (don't touch the test set) 70%-90%
           * cross_validation:split data into folds,try each fols as validation and average the results (useful for small datasets),computation expensive-->validation approach.
+          * Choose hyperparameters using the validation set;
 
-### 2) linear classification
+### 2) linear classification: y=f(x,w)=wx+b0
    
    ![image](https://user-images.githubusercontent.com/63558665/120115968-d7afc880-c153-11eb-88aa-5ad71a1767d8.png)
+
 * loss:
 
      ![image](https://user-images.githubusercontent.com/63558665/120116601-d6cc6600-c156-11eb-8826-46c3bdeca9d0.png)
