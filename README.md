@@ -1,4 +1,15 @@
-# Computer_Vision
+# Computer_Vision: 
+Computer vision is a field of artificial intelligence (AI) that enables computers and systems to derive meaningful information from digital images, videos and other visual inputs — and take actions or make recommendations based on that information
+Application:
+* Object detection
+* Object classification
+* Scene understanding
+* Semantic scene
+* segmentation
+* 3D reconstruction
+* object tracking
+* human pose estimation
+* activity recognition
 
 ### 1) Image classification:
 * what is image classification?
