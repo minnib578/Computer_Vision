@@ -117,12 +117,21 @@ linear classifier is not useful and can only draw  linear decision boundaries-->
 
    ![image](https://user-images.githubusercontent.com/63558665/120117694-6294c100-c15c-11eb-8fc0-13958b764a2d.png)
   
-  why activation?--> W2*W1=W3  end up with linear classifier again!
+ why activation?--> W2*W1=W3  end up with linear classifier again!
    
    ![image](https://user-images.githubusercontent.com/63558665/120117745-ab4c7a00-c15c-11eb-8a22-2ff3352efbe1.png)
+   
    ![image](https://user-images.githubusercontent.com/63558665/120117758-b6070f00-c15c-11eb-8bf9-efc7eb33bcd4.png)
-   Multiple layer Neural network:
+   
+Multiple layer Neural network:
+   
    ![image](https://user-images.githubusercontent.com/63558665/120117774-ca4b0c00-c15c-11eb-8930-57187382e583.png)
+
+derive delta_w L on paper?
+* Very tedious: Lots of matrix calculus, need lots of paper
+* What if we want to change loss? E.g. use softmax instead of SVM? Need to re-derive from scratch
+* Not feasible for very complex models!
+--> Backpropagation
 
 ### 4) linear classifier--> multiple layers neural network-->covolution network
    
