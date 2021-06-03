@@ -305,7 +305,20 @@ one-->many: : Produce output sequence from single input vector
 ![image](https://user-images.githubusercontent.com/63558665/120123650-05aa0280-c17e-11eb-94f5-e15ce557d91d.png)
 ![image](https://user-images.githubusercontent.com/63558665/120123743-a7315400-c17e-11eb-9814-85b0e3a5061b.png)
 
+###9） supervised learning vs. unsupervised learning
 
+* supervised learning: learn a funtion to map x-->y
+     * classification,regression, object detection, semantic segmentation, image captioning
+* unsupervised learning:Learn some underlying hidden structure of the data
+     * clustering, dimensionality reduction,feature learning, density estimation
+
+* Generative Models:Given training data, generate new samples from same distribution,Learn pmodel(x) that approximates pdata(x).Sampling new x from pmodel(x)
+
+* why genrative model?
+    * Realistic samples for artwork, super-resolution, colorization, etc
+    * Learn useful features for downstream tasks such as classification.
+    * Getting insights from high-dimensional data (physics, medical imaging, etc.)
+    * Modeling physical world for simulation and planning (robotics and reinforcement learning applications)
 
 
 
