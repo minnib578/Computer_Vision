@@ -56,12 +56,13 @@ Image classification is the process of categorizing and labeling groups of pixel
 
 ### 2) linear classification: y=f(x,w)=wx+b0
    
-   ![image](https://user-images.githubusercontent.com/63558665/120115968-d7afc880-c153-11eb-88aa-5ad71a1767d8.png)
+   ![image](https://user-images.githubusercontent.com/63558665/120711764-c20d0c80-c48d-11eb-8bcc-d2c360303188.png)
 
-* loss:
+* Loss:
 
      ![image](https://user-images.githubusercontent.com/63558665/120116601-d6cc6600-c156-11eb-8826-46c3bdeca9d0.png)
-      * SVM loss: 错误分类更高的分数，正确分类 is 0 l1 and l2 SVM loss
+      
+     * SVM loss: 错误分类更高的分数，正确分类 is 0 l1 and l2 SVM loss
           ![image](https://user-images.githubusercontent.com/63558665/120117034-257aff80-c159-11eb-9ced-793c3a178ba3.png)
           ![image](https://user-images.githubusercontent.com/63558665/120116958-d6cd6580-c158-11eb-9dde-6916a3e0287c.png)
        questions:
