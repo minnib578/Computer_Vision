@@ -142,23 +142,30 @@ power than linear classifiers
 
 
 # linear classifier--> multiple layers neural network-->covolution network
+* Architecture:
+   * 
+        ![image](https://user-images.githubusercontent.com/63558665/120119457-cc659880-c165-11eb-8f05-5f72a60b3440.png)
    
-   ![image](https://user-images.githubusercontent.com/63558665/120119457-cc659880-c165-11eb-8f05-5f72a60b3440.png)
-   ![image](https://user-images.githubusercontent.com/63558665/120119468-d4253d00-c165-11eb-9a37-22f349719691.png)
-   ![image](https://user-images.githubusercontent.com/63558665/120119656-e05dca00-c166-11eb-9929-155a02c62103.png)
-   low-level features-->high level features
-   convolution architecture: convolution layer-->ReLU-->pooling layer-->fully connected layer
+        ![image](https://user-images.githubusercontent.com/63558665/120119468-d4253d00-c165-11eb-9a37-22f349719691.png)
+   
+         ![image](https://user-images.githubusercontent.com/63558665/120119656-e05dca00-c166-11eb-9929-155a02c62103.png)
+   
+   * low-level features-->high level features
+convolution architecture: convolution layer-->ReLU-->pooling layer-->fully connected layer
    
    ![image](https://user-images.githubusercontent.com/63558665/120119722-53ffd700-c167-11eb-8176-f08cdaa0f499.png)
-   
+
    ![image](https://user-images.githubusercontent.com/63558665/120119757-87426600-c167-11eb-9981-ebc72605b8b7.png)
+
    In general, common to see CONV layers with stride 1, filters of size FxF, and zero-padding with (F-1)/2. (will preserve size spatially)
-   
+
    ![image](https://user-images.githubusercontent.com/63558665/120119883-1cddf580-c168-11eb-9e3f-3c14d6c66890.png)
    
-   pooling:Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting.
-   ![image](https://user-images.githubusercontent.com/63558665/120119992-bf967400-c168-11eb-8adb-b38fb349403b.png)
-   padding:control the spatial size of the output volumes,most commonly as we’ll see soon we will use it to exactly preserve the spatial size of the input volume so the input and output width and height are the same
+   * Pooling:Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting.
+   
+       ![image](https://user-images.githubusercontent.com/63558665/120119992-bf967400-c168-11eb-8adb-b38fb349403b.png)
+   
+  * Padding:control the spatial size of the output volumes,most commonly as we’ll see soon we will use it to exactly preserve the spatial size of the input volume so the input and output width and height are the same
    
 # Convolutional Neural Networks and training
 Detection and segmentation，classification,image caption, style transfer learning
@@ -482,7 +489,7 @@ one-->many: : Produce output sequence from single input vector
         Drawback: sequential generation is slow in both training and inference!
    * PixelCNN:Still generate image pixels starting from corner,Dependency on previous pixels now modeled using a CNN over context region
          
-         ![image](https://user-images.githubusercontent.com/63558665/120585029-08675a80-c3ff-11eb-9aa1-f7c02331131e.png)
+        ![image](https://user-images.githubusercontent.com/63558665/120585029-08675a80-c3ff-11eb-9aa1-f7c02331131e.png)
 
       Training is faster than PixelRNN (can parallelize convolutions since context region values known from training images)
       Generation is still slow: For a 32x32 image, we need to do forward passes of the network 1024 times for a single image
