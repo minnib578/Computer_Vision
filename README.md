@@ -35,16 +35,17 @@ Image classification is the process of categorizing and labeling groups of pixel
 * Data-driven methods: k and distance choised, evaluation methods
    * Nearest Neighbor classifier:The nearest neighbor classifier will take a test image, compare it to every single one of the training images, and predict the label of the closest training image.One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors I1,I2 , a reasonable choice for comparing them might be the L1 distance or L2 distance:  using vectoriation calculation
     
-    * L1 (Manhattan) distance
-        ![image](https://user-images.githubusercontent.com/63558665/120114755-a7b1f680-c14e-11eb-9122-f4c75d58a0b4.png)
-     
-    * L2 distance:(Euclidean) distance
-     
-        ![image](https://user-images.githubusercontent.com/63558665/120114899-4f2f2900-c14f-11eb-8e70-00fdf0e263e5.png)
-         
-       * ad: simple to implement and understand, no need to training
-       * disad:computation cost, slow for training is ok, but we want fast prediction-->real time 
-    
+      * L1 (Manhattan) distance
+
+          ![image](https://user-images.githubusercontent.com/63558665/120114755-a7b1f680-c14e-11eb-9122-f4c75d58a0b4.png)
+
+      * L2 distance:(Euclidean) distance
+
+          ![image](https://user-images.githubusercontent.com/63558665/120114899-4f2f2900-c14f-11eb-8e70-00fdf0e263e5.png)
+
+         * ad: simple to implement and understand, no need to training
+         * disad:computation cost, slow for training is ok, but we want fast prediction-->real time 
+
    * k-nearest neighbor classifier:instead of finding the single closest image in the training set, we will find the top k closest images, and have them vote on the label of the test image. when k==1, it is nearest neghbor classifier. knn with pixel distance never used because it is sensitive to lighting, and distance metrics on pixels are not informative.
         * disad: The classifier must remember all of the training data and store it for future comparisons with the test data. This is space inefficient because datasets may easily be gigabytes in size. Classifying a test image is expensive since it requires a comparison to all training images.
         * how to choose K and how to choose distance metric?--->choose hyperparameters working well,when K = 1 always works perfectly on training data-->Split data into train, val; choose hyperparameters on val and evaluate on test
