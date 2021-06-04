@@ -63,52 +63,51 @@ efficiently finding the parameters that minimize the loss function. (optimizatio
 
    ![image](https://user-images.githubusercontent.com/63558665/120116601-d6cc6600-c156-11eb-8826-46c3bdeca9d0.png)
       
-  * SVM loss: 错误分类更高的分数，正确分类 is 0, l1 and l2 SVM loss:difference in score between correct and incorrect class
-          
-       ![image](https://user-images.githubusercontent.com/63558665/120117034-257aff80-c159-11eb-9ced-793c3a178ba3.png)
-          
-       ![image](https://user-images.githubusercontent.com/63558665/120116958-d6cd6580-c158-11eb-9dde-6916a3e0287c.png)
+* SVM loss: 错误分类更高的分数，正确分类 is 0, l1 and l2 SVM loss:difference in score between correct and incorrect class
+
+     ![image](https://user-images.githubusercontent.com/63558665/120117034-257aff80-c159-11eb-9ced-793c3a178ba3.png)
+
+     ![image](https://user-images.githubusercontent.com/63558665/120116958-d6cd6580-c158-11eb-9dde-6916a3e0287c.png)
        
-       questions:
-        * if the correct score decrease maybe not affect the loss--> loss may not change
-             * what is min/max loss-->min:0 and max:infinite
-             * at inilization, weight is small so all s about to 0
-             * sum of loss or mean of loss or square of loss?
-             * whether w is unique? it is no unique w=2w and L=0---> which is better w or 2w?--->reguralization
-             * The same output with different weight and how to determine which is better?<--reguralization 
+     questions:
+       * if the correct score decrease maybe not affect the loss--> loss may not change
+       * what is min/max loss-->min:0 and max:infinite
+       * at inilization, weight is small so all s about to 0
+       * sum of loss or mean of loss or square of loss?
+       * whether w is unique? it is no unique w=2w and L=0---> which is better w or 2w?--->reguralization
+       * The same output with different weight and how to determine which is better?<--reguralization 
            
-       ![image](https://user-images.githubusercontent.com/63558665/120713457-ebc73300-c48f-11eb-851f-4e1b608317fd.png)
+     ![image](https://user-images.githubusercontent.com/63558665/120713457-ebc73300-c48f-11eb-851f-4e1b608317fd.png)
 
-
-   * Regularization:Prevent the model from doing too well on training data
+* Regularization:Prevent the model from doing too well on training data
            
-        ![image](https://user-images.githubusercontent.com/63558665/120117062-522f1700-c159-11eb-9c99-b09383b1de6b.png)
-            
-        * methods:
-                ![image](https://user-images.githubusercontent.com/63558665/120117110-9de1c080-c159-11eb-8795-d6ed8875a0ef.png)
-         * why?
-              * Express preferneces over weights
-              * make the model simple so it works test data
-               * improve optimization by adding curvature
+    ![image](https://user-images.githubusercontent.com/63558665/120117062-522f1700-c159-11eb-9c99-b09383b1de6b.png)
+
+    * methods:
+            ![image](https://user-images.githubusercontent.com/63558665/120117110-9de1c080-c159-11eb-8795-d6ed8875a0ef.png)
+    * why?
+        * Express preferneces over weights
+        * make the model simple so it works test data
+        * improve optimization by adding curvature
                                  
-   * softmax: interpret classifier score into probability, probability sum to 1,Choose weights to maximize the
+* softmax: interpret classifier score into probability, probability sum to 1,Choose weights to maximize the
 likelihood of the observed data
             
    ![image](https://user-images.githubusercontent.com/63558665/120117288-763f2800-c15a-11eb-9c20-b11ab39c2090.png)
      
    ![image](https://user-images.githubusercontent.com/63558665/120117410-0f6e3e80-c15b-11eb-92cc-1a67f803002a.png)
    
-   Question:
-          * What is the min/max possible softmax loss Li?
-          * At initialization all sj will be approximately equal; what is the softmax loss Li, assuming C classes?
+   * Question:
+        * What is the min/max possible softmax loss Li?
+        * At initialization all sj will be approximately equal; what is the softmax loss Li, assuming C classes?
    
    ![image](https://user-images.githubusercontent.com/63558665/120714559-5cbb1a80-c491-11eb-93b9-ddc8fbed5a4b.png)
 
+* optimization: how to find the best w?
+     * strategy 1: random search
+     * startegy 2: follow the slope-->gradient descent
 
-   * optimization: how to find the best w?
-         * strategy 1: random search
-         * startegy 2: follow the slope-->gradient descent
-    Three loss function: linear loss, SVM loss, softmax and data loss_reguralization     
+Three loss function: linear loss, SVM loss, softmax and data loss_reguralization     
         
 # Neural network-multiple layers neural network
 linear classifier is not useful and can only draw  linear decision boundaries-->featuere transformation: f(x, y) = (r(x, y), θ(x, y))
