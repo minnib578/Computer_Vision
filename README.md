@@ -144,14 +144,14 @@ Three loss function: linear loss, SVM loss, softmax and data loss_reguralization
 
 # linear classifier--> multiple layers neural network-->covolution network
 * Architecture:
-   * 
-        ![image](https://user-images.githubusercontent.com/63558665/120119457-cc659880-c165-11eb-8f05-5f72a60b3440.png)
    
-        ![image](https://user-images.githubusercontent.com/63558665/120119468-d4253d00-c165-11eb-9a37-22f349719691.png)
+    ![image](https://user-images.githubusercontent.com/63558665/120119457-cc659880-c165-11eb-8f05-5f72a60b3440.png)
+  
+    ![image](https://user-images.githubusercontent.com/63558665/120119468-d4253d00-c165-11eb-9a37-22f349719691.png)
    
-         ![image](https://user-images.githubusercontent.com/63558665/120119656-e05dca00-c166-11eb-9929-155a02c62103.png)
+    ![image](https://user-images.githubusercontent.com/63558665/120119656-e05dca00-c166-11eb-9929-155a02c62103.png)
    
-   * low-level features-->high level features
+* low-level features-->high level features
 convolution architecture: convolution layer-->ReLU-->pooling layer-->fully connected layer
    
    ![image](https://user-images.githubusercontent.com/63558665/120119722-53ffd700-c167-11eb-8176-f08cdaa0f499.png)
@@ -162,11 +162,11 @@ convolution architecture: convolution layer-->ReLU-->pooling layer-->fully conne
 
    ![image](https://user-images.githubusercontent.com/63558665/120119883-1cddf580-c168-11eb-9e3f-3c14d6c66890.png)
    
-   * Pooling:Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting.
+* Pooling:Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting.
    
-       ![image](https://user-images.githubusercontent.com/63558665/120119992-bf967400-c168-11eb-8adb-b38fb349403b.png)
-   
-  * Padding:control the spatial size of the output volumes,most commonly as we’ll see soon we will use it to exactly preserve the spatial size of the input volume so the input and output width and height are the same
+   ![image](https://user-images.githubusercontent.com/63558665/120119992-bf967400-c168-11eb-8adb-b38fb349403b.png)
+
+* Padding:control the spatial size of the output volumes,most commonly as we’ll see soon we will use it to exactly preserve the spatial size of the input volume so the input and output width and height are the same
    
 # Convolutional Neural Networks and training
 Detection and segmentation，classification,image caption, style transfer learning
