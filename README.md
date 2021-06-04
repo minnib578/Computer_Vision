@@ -46,7 +46,7 @@ Image classification is the process of categorizing and labeling groups of pixel
         * how to choose K and how to choose distance metric?--->choose hyperparameters working well,when K = 1 always works perfectly on training data-->Split data into train, val; choose hyperparameters on val and evaluate on test
         * k-Nearest Neighbor with pixel distance never used because Distance metrics on pixels are not informative and slow<-- light change affect performance
        
-       ![image width="100"](https://user-images.githubusercontent.com/63558665/120115147-63bff100-c150-11eb-8425-4d92a49cdcff.png)
+           ![image](https://user-images.githubusercontent.com/63558665/120115147-63bff100-c150-11eb-8425-4d92a49cdcff.png)
        
    * Tuning hyperparameters:
         * validation: split the training dataset into training and validation and evaluate the model on test set (don't touch the test set) 70%-90%
