@@ -15,6 +15,7 @@ Application:
 
 #  Image classification:
 * what is image classification?
+
 Image classification is the process of categorizing and labeling groups of pixels or vectors within an image based on specific rule
 
 - K-Nearest Neighbor
@@ -22,7 +23,7 @@ Image classification is the process of categorizing and labeling groups of pixel
 - Two-layer neural network
 - Image features
 
-* challenges for image classification?
+* Challenges for image classification?
    * viewpoint variation: all pixels change when the camera moves
    * background cluster: objects are similar to the background (color or texture)
    * illumination: (too dark or too light)-->data driven x
@@ -30,9 +31,11 @@ Image classification is the process of categorizing and labeling groups of pixel
    * deformation: different shape/pose of the same objects
    * intraclass variation:differnt types of the same object
    * scale variation:Visual classes often exhibit variation in their siz
-* data-driven methods: k and distance choised, evaluation methods
-   * Nearest Neighbor classifier:The nearest neighbor classifier will take a test image, compare it to every single one of the training images, and predict the label of the closest training image.One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors I1,I2 , a reasonable choice for comparing them might be the L1 distance: (Manhattan) distance. vectoriation calculation
-         
+   
+* Data-driven methods: k and distance choised, evaluation methods
+   * Nearest Neighbor classifier:The nearest neighbor classifier will take a test image, compare it to every single one of the training images, and predict the label of the closest training image.One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors I1,I2 , a reasonable choice for comparing them might be the L1 distance or L2 distance:  using vectoriation calculation
+    
+    * L1 (Manhattan) distance
         ![image](https://user-images.githubusercontent.com/63558665/120114755-a7b1f680-c14e-11eb-9122-f4c75d58a0b4.png)
      
     * L2 distance:(Euclidean) distance
