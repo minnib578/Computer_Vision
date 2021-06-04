@@ -325,12 +325,18 @@ number of parameters is 0
               ![image](https://user-images.githubusercontent.com/63558665/120122009-3f760b80-c174-11eb-8ced-bc8ab1c32ab5.png)
              
           * They also find that collecting more data is better than finetuning on a related task
- 
+          
             ![image](https://user-images.githubusercontent.com/63558665/120122057-8d8b0f00-c174-11eb-8de9-fc32da67cbd0.png)
 
             ![image](https://user-images.githubusercontent.com/63558665/120122614-e3ad8180-c177-11eb-8f22-5cca118038b5.png)
-
-### 6) CNN architecture
+* Summary
+    * Activation Functions (use ReLU)
+    * Data Preprocessing (images: subtract mean)
+    * Weight Initialization (use Xavier/He init)
+    * Batch Normalization (use this!)
+    * Transfer learning (use this if you can!)
+    
+# CNN architecture
 * LeNet-5
 
 ![image](https://user-images.githubusercontent.com/63558665/120122674-2ec79480-c178-11eb-9ddf-e0fea9dcef24.png)
