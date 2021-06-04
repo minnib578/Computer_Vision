@@ -70,12 +70,12 @@ efficiently finding the parameters that minimize the loss function. (optimizatio
      ![image](https://user-images.githubusercontent.com/63558665/120116958-d6cd6580-c158-11eb-9dde-6916a3e0287c.png)
        
      questions:
-       * if the correct score decrease maybe not affect the loss--> loss may not change
-       * what is min/max loss-->min:0 and max:infinite
-       * at inilization, weight is small so all s about to 0
-       * sum of loss or mean of loss or square of loss?
-       * whether w is unique? it is no unique w=2w and L=0---> which is better w or 2w?--->reguralization
-       * The same output with different weight and how to determine which is better?<--reguralization 
+         * if the correct score decrease maybe not affect the loss--> loss may not change
+         * what is min/max loss-->min:0 and max:infinite
+         * at inilization, weight is small so all s about to 0
+         * sum of loss or mean of loss or square of loss?
+         * whether w is unique? it is no unique w=2w and L=0---> which is better w or 2w?--->reguralization
+         * The same output with different weight and how to determine which is better?<--reguralization 
            
      ![image](https://user-images.githubusercontent.com/63558665/120713457-ebc73300-c48f-11eb-851f-4e1b608317fd.png)
 
