@@ -190,11 +190,11 @@ Detection and segmentation，classification,image caption, style transfer learni
         * average pooling
              
 number of parameters is 0
-* tips:
-        * Trend towards smaller filters and deeper architectures
-        * Trend towards getting rid of POOL/FC layers (just CONV)
-        * conv-->ReLu-->pool-->softmax
-        * 
+* Tips:
+    * Trend towards smaller filters and deeper architectures
+    * Trend towards getting rid of POOL/FC layers (just CONV)
+    * conv-->ReLu-->pool-->softmax
+        
 # Training
 * one time setup: activation functions, preprocessing, weight initialization, regularization, gradient checking
       
@@ -329,15 +329,84 @@ number of parameters is 0
               ![image](https://user-images.githubusercontent.com/63558665/120122009-3f760b80-c174-11eb-8ced-bc8ab1c32ab5.png)
              
           * They also find that collecting more data is better than finetuning on a related task
+* Improve training error:
+   1. Optimizer:
+   * Gradient Descent:
+     * Batch gradient descent
+         * Advantages:
+                 Easy computation.
+                 Easy to implement.
+                 Easy to understand.
+         * Disadvantages:
+                 May trap at local minima.
+                 Weights are changed after calculating gradient on the whole dataset. So, if the dataset is too large than this may take years to converge to the minima.
+                 Requires large memory to calculate gradient on the whole dataset.
+     * Stochastic gradient descent
+         * Advantages:
+                 Frequent updates of model parameters hence, converges in less time.
+                 Requires less memory as no need to store values of loss functions.
+                 May get new minima’s.
+         * Disadvantages:
+                 High variance in model parameters.
+                 May shoot even after achieving global minima.
+                 To get the same convergence as gradient descent needs to slowly reduce the value of learning rate.
+     * Mini-batch gradient descent
+         * Advantages:
+                 Frequently updates the model parameters and also has less variance.
+                 Requires medium amount of memory.
+
+      All types of Gradient Descent have some challenges:
+      Choosing an optimum value of the learning rate. If the learning rate is too small than gradient descent may take ages to converge.
+      Have a constant learning rate for all the parameters. There may be some parameters which we may not want to change at the same rate.
+      May get trapped at local minima.
+
+  * Adaptive:
+     * Momentum: Momentum was invented for reducing high variance in SGD and softens the convergence. It accelerates the convergence towards the relevant direction and reduces the fluctuation to the irrelevant direction.
+         * Advantages:
+                 Reduces the oscillations and high variance of the parameters.
+                 Converges faster than gradient descent.
+          * Disadvantages:
+                 One more hyper-parameter is added which needs to be selected manually and accurately.
+  * Adagrad: One of the disadvantages of all the optimizers explained is that the learning rate is constant for all parameters and for each cycle. This optimizer changes the learning rate. It changes the learning rate ‘η’ for each parameter and at every time step ‘t’. learning rate which is modified for given parameter θ(i) at a given time based on previous gradients calculated for given parameter θ(i).
+      * Advantages:
+             Learning rate changes for each training parameter.
+             Don’t need to manually tune the learning rate.
+             Able to train on sparse data.
+       * Disadvantages:
+             Computationally expensive as a need to calculate the second order derivative.
+             The learning rate is always decreasing results in slow training.
+  * Adadelta:It is an extension of AdaGrad which tends to remove the decaying learning Rate problem of it. Instead of accumulating all previously squared gradients, Adadelta limits the window of accumulated past gradients to some fixed size w. In this exponentially moving average is used rather than the sum of all the gradients.
+      * Advantages:
+             Now the learning rate does not decay and the training does not stop.
+      * Disadvantages:
+             Computationally expensive.
+  * Adam: Adam (Adaptive Moment Estimation) works with momentums of first and second order. The intuition behind the Adam is that we don’t want to roll so fast just because we can jump over the minimum, we want to decrease the velocity a little bit for a careful search. In addition to storing an exponentially decaying average of past squared gradients like AdaDelta, Adam also keeps an exponentially decaying average of past gradients M(t).
+      * Advantages:
+             The method is too fast and converges rapidly.
+             Rectifies vanishing learning rate, high variance.
+      * Disadvantages:
+             Computationally costly.
+    how to choose a optimizer?
+    Adam is the best optimizers. If one wants to train the neural network in less time and more efficiently than Adam is the optimizer.
+    For sparse data use the optimizers with dynamic learning rate.
+    If, want to use gradient descent algorithm than min-batch gradient descent is the best option. 
+    
+   2. Learning rate schedule
+   
+* Improve test error: 
+    * regularization
+    * choosing hyperparameters
 * Summary
     * Activation Functions (use ReLU)
     * Data Preprocessing (images: subtract mean)
     * Weight Initialization (use Xavier/He init)
     * Batch Normalization (use this!)
     * Transfer learning (use this if you can!)
-    * Improve training error: optimizer, learning rate schedule
-    * improve test error: regularization, choosing hyperparameters
     
+  
+  
+  
+
 # CNN architecture
 * LeNet-5
 
