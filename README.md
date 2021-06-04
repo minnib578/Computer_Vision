@@ -303,33 +303,7 @@ number of parameters is 0
       * Fractional Pooling:Use randomized pooling regions
       * stochastic depth: Skip some layers in the network
       
-     
-   5. Summary:
-        * Consider dropout for large-->fully-connected layers
-        * Batch normalization and data augmentation almost always a good idea
-        * Try cutout and mixup especially for small classification datasets
-        * Training Dynamics  
-        * babysitting the learning process
-         * Learning rate decays over time/cosine/linear
-                            ![image](https://user-images.githubusercontent.com/63558665/120122292-e1e2be80-c175-11eb-8ddc-0cca78a8a650.png)
-                            
-        * Adam is a good default choice in many cases; it often works ok even with constant learning rate.SGD+Momentum can outperform Adam but mayrequire more tuning of LR and schedule-->Try cosine schedule, very few hyperparameters! If you can afford to do full batch updates then try out-->L-BFGS (and don’t forget to disable all sources of noise)
-        * parameters update, hyperparameter optimization: check initial loss-->overfit a small sample--> find LR that makes loss go down--> cooarse grid, train for ~1-5 epochs-->refine grid, train longer-->look at loss and accuracy curves
-        * early stop
-        
-* Evaluation：
-     * model ensembles: Train multiple independent models,At test time average their results
-     * test-time augmentation
-     * transfer learning:Free part of pretained model and reinitialized fine tune part
-         * Lower learning rate when finetuning; 1/10 of original LR is good starting point
-         * With bigger dataset, train more layers, with small dataset train less layer(fcl)
-
-              ![image](https://user-images.githubusercontent.com/63558665/120121953-13f32100-c174-11eb-9ed4-ad345d1f13b6.png)
-                 
-              ![image](https://user-images.githubusercontent.com/63558665/120122009-3f760b80-c174-11eb-8ced-bc8ab1c32ab5.png)
-             
-          * They also find that collecting more data is better than finetuning on a related task
-* Improve training error:
+5. Improve training error:
    1. Optimizer:
    * Gradient Descent:
      * Batch gradient descent
@@ -386,26 +360,48 @@ number of parameters is 0
              Rectifies vanishing learning rate, high variance.
       * Disadvantages:
              Computationally costly.
-    how to choose a optimizer?
-    Adam is the best optimizers. If one wants to train the neural network in less time and more efficiently than Adam is the optimizer.
-    For sparse data use the optimizers with dynamic learning rate.
-    If, want to use gradient descent algorithm than min-batch gradient descent is the best option. 
+how to choose a optimizer?
+Adam is the best optimizers. If one wants to train the neural network in less time and more efficiently than Adam is the optimizer.
+For sparse data use the optimizers with dynamic learning rate.If, want to use gradient descent algorithm than min-batch gradient descent is the best option. 
     
    2. Learning rate schedule
    
 * Improve test error: 
     * regularization
     * choosing hyperparameters
+ 
+
+    
+        
+6. Evaluation：
+     * model ensembles: Train multiple independent models,At test time average their results
+     * test-time augmentation
+     * transfer learning:Free part of pretained model and reinitialized fine tune part
+         * Lower learning rate when finetuning; 1/10 of original LR is good starting point
+         * With bigger dataset, train more layers, with small dataset train less layer(fcl)
+
+              ![image](https://user-images.githubusercontent.com/63558665/120121953-13f32100-c174-11eb-9ed4-ad345d1f13b6.png)
+                 
+              ![image](https://user-images.githubusercontent.com/63558665/120122009-3f760b80-c174-11eb-8ced-bc8ab1c32ab5.png)
+             
+          * They also find that collecting more data is better than finetuning on a related task
+
 * Summary
     * Activation Functions (use ReLU)
     * Data Preprocessing (images: subtract mean)
     * Weight Initialization (use Xavier/He init)
     * Batch Normalization (use this!)
     * Transfer learning (use this if you can!)
-    
-  
-  
-  
+    * Consider dropout for large-->fully-connected layers
+    * Batch normalization and data augmentation almost always a good idea
+    * Try cutout and mixup especially for small classification datasets
+    * Training Dynamics  
+    * babysitting the learning process
+    * Learning rate decays over time/cosine/linear
+                ![image](https://user-images.githubusercontent.com/63558665/120122292-e1e2be80-c175-11eb-8ddc-0cca78a8a650.png)
+     * Adam is a good default choice in many cases; it often works ok even with constant learning rate.SGD+Momentum can outperform Adam but mayrequire more tuning of LR and schedule-->Try cosine schedule, very few hyperparameters! If you can afford to do full batch updates then try out-->L-BFGS (and don’t forget to disable all sources of noise)
+    * parameters update, hyperparameter optimization: check initial loss-->overfit a small sample--> find LR that makes loss go down--> cooarse grid, train for ~1-5 epochs-->refine grid, train longer-->look at loss and accuracy curves
+    * early stop
 
 # CNN architecture
 * LeNet-5
