@@ -163,9 +163,13 @@ convolution architecture: convolution layer-->ReLU-->pooling layer-->fully conne
    ![image](https://user-images.githubusercontent.com/63558665/120119883-1cddf580-c168-11eb-9e3f-3c14d6c66890.png)
    
 * Pooling:Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting.
+    * perform a sub‐sampling to reduce the size of the feature map
+    * merge the local semantically similar features into a more concise representation
+    * Max pooling – major method
+    * Average pooling
+    * The effect of overlapping pooling in AlexNet is not significant
+    ![image](https://user-images.githubusercontent.com/63558665/120119992-bf967400-c168-11eb-8adb-b38fb349403b.png)
    
-   ![image](https://user-images.githubusercontent.com/63558665/120119992-bf967400-c168-11eb-8adb-b38fb349403b.png)
-
 * Padding:control the spatial size of the output volumes,most commonly as we’ll see soon we will use it to exactly preserve the spatial size of the input volume so the input and output width and height are the same
    
 # Convolutional Neural Networks and training
@@ -294,6 +298,9 @@ number of parameters is 0
           * Dropout is training a large ensemble of models (that share parameters).
           * Each binary mask is one model
           * drop in train and scale in test
+          * Dropout is an effective method to suppress overfitting
+          * Dropout layer randomly deletes some neurons from the dense layers.
+          * It can reduce complex co‐adaptations of neurons and force the neural network to learn more robust features
       * data augmentation:
           * Random crops and scales
           * Color Jitter
@@ -367,11 +374,11 @@ For sparse data use the optimizers with dynamic learning rate.If, want to use gr
    2. Learning rate schedule
    
 * Improve test error: 
-    * regularization to improve single-model performance
-    * choosing hyperparameters:
-    * network architecture
-    * learning rate, its decay schedule, update type
-    * regularization (L2/Dropout strength)
+    * Regularization to improve single-model performance. Data augmentation to improve test time performance
+    * Choosing hyperparameters:
+    * Network architectures
+    * Learning rate, its decay schedule, update type
+    * Regularization (L2/Dropout strength)
  
 
     
@@ -409,29 +416,58 @@ For sparse data use the optimizers with dynamic learning rate.If, want to use gr
     * early stop
     * Train multiple independent models, At test time average their results
     * Instead of using actual parameter vector, keep a moving average of the parameter vector and use that at test time
+    * Huge train / val gap means overfitting! Increase regularization to get more data
+    * No gap between train / val means underfitting: train longer, use a bigger model
 
 # CNN architecture
 * LeNet-5
 
-![image](https://user-images.githubusercontent.com/63558665/120122674-2ec79480-c178-11eb-9ddf-e0fea9dcef24.png)
-
+  ![image](https://user-images.githubusercontent.com/63558665/120122674-2ec79480-c178-11eb-9ddf-e0fea9dcef24.png)
+* ad:
+* disad:
 * AlexNet:
-![image](https://user-images.githubusercontent.com/63558665/120122712-6df5e580-c178-11eb-8ce1-61df9485e55f.png)
+    * five conv layers
+    * Max pooling is applied between every two conv layers
+    * After the tensors are flattened, two fully‐connected (dense) layers are used
+    * The output layer is a softmax layerto compute the softmax loss function for learning
+    * AlexNet uses both data augmentation and dropout layers
+    * Training parameters:
+        * Batch size:128
+        * momentum:0.9
+        * learning rate:0.001
+    
+    ![image](https://user-images.githubusercontent.com/63558665/120122712-6df5e580-c178-11eb-8ce1-61df9485e55f.png)
 
-![image](https://user-images.githubusercontent.com/63558665/120122711-68000480-c178-11eb-8454-f9cfe86285db.png)
-
-* ZFNet:
+    ![image](https://user-images.githubusercontent.com/63558665/120122711-68000480-c178-11eb-8454-f9cfe86285db.png)
+    
+    * ad:
+        * AlexNet is considered as the milestone of CNN for image classification
+        * The unique advantage ofAlexNet is the directly image input to the classification model
+        * The convolution layers can automatically extract the edges of the images, and fully connected layers learning these features 
+        * Many methods such as the conv+pooling design, dropout,GPU, parallel computing, ReLU is still the industrial standard for computer vision
+    * disad:
+        * AlexNet is NOT deep enough compared to the later model such asVGG Net, GoogLENet, and ResNet
+        * The use of large convolution filters (5*5 and 11*11) is not encouraged shortly after that
+        * Use normal distribution to initiate the weights in the neural networks cannot effective solve the problem of gradient vanishing, replaced bythe Xavier method late
+    
+* ZFNet: Improved hyperparameters over AlexNet
    Alexnet: CONV1: change from (11x11 stride 4) to (7x7 stride 2)
    CONV3,4,5: instead of 384, 384, 256 filters use 512, 1024, 512
 
 * VGGNet:Deeper network
-8 layers AlexNet-->16 layers-19 layers(VGG16Net)
-Only 3x3 CONV stride 1, pad 1 and 2x2 MAX POOL stride 2
-Why use smaller filters? (3x3 conv) ?
-Stack of three 3x3 conv (stride 1) layers has same effective receptive field as one 7x7 conv layer.But deeper, more non-linearities.fewer parameters
+    * 8 layers AlexNet-->16 layers-19 layers(VGG16Net)
+    * Only 3x3 CONV stride 1, pad 1 and 2x2 MAX POOL stride 2
+    * Why use smaller filters? (3x3 conv) ?
+    Stack of three 3x3 conv (stride 1) layers has same effective receptive field as one 7x7 conv layer.But deeper, more non-linearities.fewer parameters
 
-![image](https://user-images.githubusercontent.com/63558665/120122818-46534d00-c179-11eb-89eb-de3a5eff18ab.png)
-
+    ![image](https://user-images.githubusercontent.com/63558665/120122818-46534d00-c179-11eb-89eb-de3a5eff18ab.png)
+    
+    * disad: 
+        * There are only a few exceptions when multi-scale training images are involved
+        * Most memory is in early conv
+        * Most params are in late FC
+        * Computation expensive
+        
 * GoogleNet: deeper but more computational
 22 layers--Efficient “Inception” module--No FC layers
 
