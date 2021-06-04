@@ -29,30 +29,29 @@ Image classification is the process of categorizing and labeling groups of pixel
    * deformation: different shape/pose of the same objects
    * intraclass variation:differnt types of the same object
    * scale variation:Visual classes often exhibit variation in their siz
- 
- * data-driven methods: k and distance choised, evaluation methods
+* data-driven methods: k and distance choised, evaluation methods
    * Nearest Neighbor classifier:The nearest neighbor classifier will take a test image, compare it to every single one of the training images, and predict the label of the closest training image.One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors I1,I2 , a reasonable choice for comparing them might be the L1 distance: (Manhattan) distance. vectoriation calculation
          
         ![image](https://user-images.githubusercontent.com/63558665/120114755-a7b1f680-c14e-11eb-9122-f4c75d58a0b4.png)
      
-     L2 distance:(Euclidean) distance
+    * L2 distance:(Euclidean) distance
      
         ![image](https://user-images.githubusercontent.com/63558665/120114899-4f2f2900-c14f-11eb-8e70-00fdf0e263e5.png)
          
        * ad: simple to implement and understand, no need to training
        * disad:computation cost, slow for training is ok, but we want fast prediction-->real time 
     
-    * k-nearest neighbor classifier:instead of finding the single closest image in the training set, we will find the top k closest images, and have them vote on the label of the test image. when k==1, it is nearest neghbor classifier. knn with pixel distance never used because it is sensitive to lighting, and distance metrics on pixels are not informative.
+   * k-nearest neighbor classifier:instead of finding the single closest image in the training set, we will find the top k closest images, and have them vote on the label of the test image. when k==1, it is nearest neghbor classifier. knn with pixel distance never used because it is sensitive to lighting, and distance metrics on pixels are not informative.
         * disad: The classifier must remember all of the training data and store it for future comparisons with the test data. This is space inefficient because datasets may easily be gigabytes in size. Classifying a test image is expensive since it requires a comparison to all training images.
         * how to choose K and how to choose distance metric?--->choose hyperparameters working well,when K = 1 always works perfectly on training data-->Split data into train, val; choose hyperparameters on val and evaluate on test
         * k-Nearest Neighbor with pixel distance never used because Distance metrics on pixels are not informative and slow<-- light change affect performance
        
-       ![image](https://user-images.githubusercontent.com/63558665/120115147-63bff100-c150-11eb-8425-4d92a49cdcff.png)
+       ![image width="200"](https://user-images.githubusercontent.com/63558665/120115147-63bff100-c150-11eb-8425-4d92a49cdcff.png)
        
-     * Tuning hyperparameters:
-          * validation: split the training dataset into training and validation and evaluate the model on test set (don't touch the test set) 70%-90%
-          * cross_validation:split data into folds,try each fols as validation and average the results (useful for small datasets),computation expensive-->validation approach.
-          * Choose hyperparameters using the validation set;
+   * Tuning hyperparameters:
+        * validation: split the training dataset into training and validation and evaluate the model on test set (don't touch the test set) 70%-90%
+        * cross_validation:split data into folds,try each fols as validation and average the results (useful for small datasets),computation expensive-->validation approach.
+        * Choose hyperparameters using the validation set;
 
 # linear classification: y=f(x,w)=wx+b0
    
@@ -303,14 +302,11 @@ number of parameters is 0
         * Try cutout and mixup especially for small classification datasets
         * Training Dynamics  
         * babysitting the learning process
-             * Learning rate decays over time/cosine/linear
+         * Learning rate decays over time/cosine/linear
                             ![image](https://user-images.githubusercontent.com/63558665/120122292-e1e2be80-c175-11eb-8ddc-0cca78a8a650.png)
                             
         * Adam is a good default choice in many cases; it often works ok even with constant learning rate.SGD+Momentum can outperform Adam but mayrequire more tuning of LR and schedule-->Try cosine schedule, very few hyperparameters! If you can afford to do full batch updates then try out-->L-BFGS (and don’t forget to disable all sources of noise)
-        * parameters update, hyperparameter optimization
-           
-             ![image](https://user-images.githubusercontent.com/63558665/120122603-cb3d6700-c177-11eb-9539-f6b9c98211b3.png)
-           
+        * parameters update, hyperparameter optimization: check initial loss-->overfit a small sample--> find LR that makes loss go down--> cooarse grid, train for ~1-5 epochs-->refine grid, train longer-->look at loss and accuracy curves
         * early stop
         
 * Evaluation：
@@ -325,16 +321,14 @@ number of parameters is 0
               ![image](https://user-images.githubusercontent.com/63558665/120122009-3f760b80-c174-11eb-8ced-bc8ab1c32ab5.png)
              
           * They also find that collecting more data is better than finetuning on a related task
-          
-            ![image](https://user-images.githubusercontent.com/63558665/120122057-8d8b0f00-c174-11eb-8de9-fc32da67cbd0.png)
-
-            ![image](https://user-images.githubusercontent.com/63558665/120122614-e3ad8180-c177-11eb-8f22-5cca118038b5.png)
 * Summary
     * Activation Functions (use ReLU)
     * Data Preprocessing (images: subtract mean)
     * Weight Initialization (use Xavier/He init)
     * Batch Normalization (use this!)
     * Transfer learning (use this if you can!)
+    * Improve training error: optimizer, learning rate schedule
+    * improve test error: regularization, choosing hyperparameters
     
 # CNN architecture
 * LeNet-5
