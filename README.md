@@ -367,16 +367,19 @@ For sparse data use the optimizers with dynamic learning rate.If, want to use gr
    2. Learning rate schedule
    
 * Improve test error: 
-    * regularization
-    * choosing hyperparameters
+    * regularization to improve single-model performance
+    * choosing hyperparameters:
+    * network architecture
+    * learning rate, its decay schedule, update type
+    * regularization (L2/Dropout strength)
  
 
     
         
 6. Evaluation：
-     * model ensembles: Train multiple independent models,At test time average their results
-     * test-time augmentation
-     * transfer learning:Free part of pretained model and reinitialized fine tune part
+     * Model ensembles: Train multiple independent models,At test time average their results
+     * Test-time augmentation
+     * Transfer learning:Free part of pretained model and reinitialized fine tune part
          * Lower learning rate when finetuning; 1/10 of original LR is good starting point
          * With bigger dataset, train more layers, with small dataset train less layer(fcl)
 
@@ -398,10 +401,14 @@ For sparse data use the optimizers with dynamic learning rate.If, want to use gr
     * Training Dynamics  
     * babysitting the learning process
     * Learning rate decays over time/cosine/linear
-                ![image](https://user-images.githubusercontent.com/63558665/120122292-e1e2be80-c175-11eb-8ddc-0cca78a8a650.png)
+                
+         ![image](https://user-images.githubusercontent.com/63558665/120122292-e1e2be80-c175-11eb-8ddc-0cca78a8a650.png)
+                
      * Adam is a good default choice in many cases; it often works ok even with constant learning rate.SGD+Momentum can outperform Adam but mayrequire more tuning of LR and schedule-->Try cosine schedule, very few hyperparameters! If you can afford to do full batch updates then try out-->L-BFGS (and don’t forget to disable all sources of noise)
     * parameters update, hyperparameter optimization: check initial loss-->overfit a small sample--> find LR that makes loss go down--> cooarse grid, train for ~1-5 epochs-->refine grid, train longer-->look at loss and accuracy curves
     * early stop
+    * Train multiple independent models, At test time average their results
+    * Instead of using actual parameter vector, keep a moving average of the parameter vector and use that at test time
 
 # CNN architecture
 * LeNet-5
