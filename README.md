@@ -69,7 +69,7 @@ efficiently finding the parameters that minimize the loss function. (optimizatio
 
      ![image](https://user-images.githubusercontent.com/63558665/120116958-d6cd6580-c158-11eb-9dde-6916a3e0287c.png)
        
-     questions:
+     * questions:
          * if the correct score decrease maybe not affect the loss--> loss may not change
          * what is min/max loss-->min:0 and max:infinite
          * at inilization, weight is small so all s about to 0
@@ -233,55 +233,70 @@ number of parameters is 0
            * Generalizes ReLU and Leaky ReLU
            * Linear Regime! Does not saturate! Does not die!
            * Problem: doubles the number of parameters/neuron
-Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
+       * Summary:
+           * Using ReLu be careful with learning rate
+           * Don’t use sigmoid or tanh
+           * Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
+
       
-   2. preprocessing:consider what happends when the input to a neura is always positive--->zigzag path
-        * zero-mean data--> visualize data with PCA and Whitening
-            * substract the mean image(AlexNet)
-            * substract per-channel mean (VGGNet)
-            * substract per-channel mean and divide by per-channel std (ResNet)
-        * normalization:Before normalization: classification loss very sensitive to changes in weight matrix; hard to optimize. After normalization: less sensitive to small changes in weights; easier to optimize
+   2. data preprocessing:consider what happends when the input to a neura is always positive/negative--->zigzag path
+     
+     * zero-mean data--> visualize data with PCA and Whitening
+          * substract the mean image(AlexNet)
+          * substract per-channel mean (VGGNet)
+          * substract per-channel mean and divide by per-channel std (ResNet)
+     
+     * normalization:Before normalization: classification loss very sensitive to changes in weight matrix; hard to optimize. After normalization: less sensitive to small changes in weights; easier to optimize
       
-   3. weight initialization:
-        * small random numbers:(gaussian with zero mean and 1e-2 standard deviation)-->work with small network, but no deep network---> vanishing gradient-->no learning
-        * “Xavier” Initialization: Activations are nicely scaled for all layers-->ReLU Activations collapse to zero again-->
+   3. weight initialization: different initialization point with different model performance with the same parameters
+     
+     * small random numbers:(gaussian with zero mean and 1e-2 standard deviation)-->work with small network, but no deep network---> vanishing gradient-->no learning
+     
+     * all activation tend to zero for deeper network layers--> all zero no lerning-->local gradient tend to zero
+     
+     * “Xavier” Initialization: Activations are nicely scaled for all layers-->ReLU Activations collapse to zero again-->
                      
-             ![image](https://user-images.githubusercontent.com/63558665/120121487-c4135a80-c171-11eb-8561-d06a4b12ef89.png)
+          ![image](https://user-images.githubusercontent.com/63558665/120121487-c4135a80-c171-11eb-8561-d06a4b12ef89.png)
              
-         * Kaiming/MSRA initilization
+     * Kaiming/MSRA initilization
          
-              ![image](https://user-images.githubusercontent.com/63558665/120121622-70554100-c172-11eb-992e-930fa4462046.png)
+          ![image](https://user-images.githubusercontent.com/63558665/120121622-70554100-c172-11eb-992e-930fa4462046.png)
               
-        depending on differnt activation function using differnt weight inilization
+     * depending on differnt activation function using differnt weight inilization
       
-   4. regularization: zero-mean unit-variance activationa and improve single model performance
-        * batchnormalization: During testing batchnorm becomes a linear operator! Can be fused with the previous fully-connected or conv layer
-             ![image](https://user-images.githubusercontent.com/63558665/120121738-1dc85480-c173-11eb-814f-616134640c4c.png)
-            * Makes deep networks much easier to train!
-            * Improves gradient flow
-            * Allows higher learning rates, faster convergence
-            * Networks become more robust to initialization
-            * Acts as regularization during training
-            * Zero overhead at test-time: can be fused with conv!
-            * Behaves differently during training and testing: this is a very common source of bugs!
-            * layer batchnormalization used in recurrent networks
-            * instance normalization/group normalization
+   4. Regularization: zero-mean unit-variance activationa and improve single model performance
+     
+     * batchnormalization: (zero-mean unit-variance) During testing batchnorm becomes a linear operator! Can be fused with the previous fully-connected or conv layer
+          
+          ![image](https://user-images.githubusercontent.com/63558665/120121738-1dc85480-c173-11eb-814f-616134640c4c.png)
+          
+          * Makes deep networks much easier to train!
+          * Improves gradient flow
+          * Allows higher learning rates, faster convergence
+          * Networks become more robust to initialization
+          * Acts as regularization during training
+          * Zero overhead at test-time: can be fused with conv!
+          * Behaves differently during training and testing: this is a very common source of bugs!
+          * layer batchnormalization used in recurrent networks
+          * instance normalization/group normalization
+          * Usually inserted after Fully Connected or Convolutional layers, and before nonlinearity
             
               ![image](https://user-images.githubusercontent.com/63558665/120122407-882ec400-c176-11eb-9a3a-d2856af4d60a.png)
            
-        * dropout:In each forward pass, randomly set some neurons to zero Probability of dropping is a hyperparameter; 0.5 is common
-            * Dropout is training a large ensemble of models (that share parameters).
-            * Each binary mask is one model
-            * drop in train and scale in test
-        * data augmentation:
-            * Random crops and scales
-            * Color Jitter
-            * translation/rotation/stretching/shearing/lens distortions/Cutout/random crop/mixup
-            * add random noise
-       * Dropconnect: Drop connections between neurons (set weights to 0)
-       * Fractional Pooling:Use randomized pooling regions
-       * stochastic depth: Skip some layers in the network
-    
+     * dropout:In each forward pass, randomly set some neurons to zero Probability of dropping is a hyperparameter; 0.5 is common
+          * Dropout is training a large ensemble of models (that share parameters).
+          * Each binary mask is one model
+          * drop in train and scale in test
+      * data augmentation:
+          * Random crops and scales
+          * Color Jitter
+          * translation/rotation/stretching/shearing/lens distortions/Cutout/random crop/mixup
+          * add random noise
+      * Dropconnect: Drop connections between neurons (set weights to 0)
+      * Fractional Pooling:Use randomized pooling regions
+      * stochastic depth: Skip some layers in the network
+      
+     
    5. Summary:
         * Consider dropout for large-->fully-connected layers
         * Batch normalization and data augmentation almost always a good idea
@@ -301,9 +316,9 @@ Using ReLu be careful with learning rate--  Don’t use sigmoid or tanh---Try ou
 * Evaluation：
      * model ensembles: Train multiple independent models,At test time average their results
      * test-time augmentation
-     * transfer learning
+     * transfer learning:Free part of pretained model and reinitialized fine tune part
          * Lower learning rate when finetuning; 1/10 of original LR is good starting point
-         * With bigger dataset, train more layers
+         * With bigger dataset, train more layers, with small dataset train less layer(fcl)
 
               ![image](https://user-images.githubusercontent.com/63558665/120121953-13f32100-c174-11eb-9ed4-ad345d1f13b6.png)
                  
