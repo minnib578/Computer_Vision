@@ -734,8 +734,100 @@ sequence to sequence :many to one (encoder)-->one to many (decoder)
    * Common to use LSTM or GRU: their additive interactions improve gradient flow
    * Backward flow of gradients in RNN can explode or vanish. Exploding is controlled with gradient clipping. Vanishing is controlled with additive interactions (LSTM)
    * Better/simpler architectures are a hot topic of current research as well as new paradigms for reasoning over sequences
-###9） supervised learning vs. unsupervised learning
 
+# Attention and Transformers
+* Attension: NLP and image caption
+    * Problem: Model needs to encode everything it wants to say within c (context vector)-->New context vector at every time step +Each context vector will attend to different image regions
+    * steps:
+        * Compute alignments H x W scores (scalars)
+        
+           ![image](https://user-images.githubusercontent.com/63558665/120876256-bf89e000-c57d-11eb-80fd-a085a3352bb6.png)
+        
+        * Attendtion: Normalize to get attention weights-->f_att(.) is an MLP
+        * Compute context vector:
+         
+            ![image](https://user-images.githubusercontent.com/63558665/120876603-b0a42d00-c57f-11eb-8d03-1b0250819c59.png)
+            
+         * Each timestep of decoder uses a different context vector that looks at different parts of the input image
+         * This entire process is differentiable
+         * model chooses its own attention weights. No attention supervision is required
+    * Methods:
+    * General attention layer: mul+add--> Recall that the query vector was a function of the input vectors
+         * the input vectors are used for both the alignment as well as the attention calculations.
+         
+            ![image](https://user-images.githubusercontent.com/63558665/120877089-8f910b80-c582-11eb-9402-0e477fbfe20b.png)
+   
+   * self-attention:
+       * calculate the query vector from the input vectors, therefore, defining a "self_attention layer"
+       * Instead, query vectors are calculated using a FC layer and No input query vectors anymore
+        
+          ![image](https://user-images.githubusercontent.com/63558665/120877263-90766d00-c583-11eb-8c45-1903dbb41722.png)
+
+    Problem: how can we encode ordered sequences like language or spatially ordered image features?
+    
+    * Positional encoding:
+        * Concatenate special positional encoding pj to each input vector xj
+        * We use a function pos: N →Rd to process the position j of the vector into a d-dimensional vector
+            * It should output a unique encoding for each time-step (word’s position in a sentence)
+            * Distance between any two time-steps should be consistent across sentences with different lengths.
+            * Our model should generalize to longer sentences without any efforts. Its values should be bounded.
+            * It must be deterministic
+            * opitons
+         * options for pos(.):
+             * Learn a lookup table:
+                  * Learn parameters to use for pos(t) for t ε [0, T]
+                  * Lookup table contains T x d parameters.
+              * Design a fixed function with the desiderata
+          
+            ![image](https://user-images.githubusercontent.com/63558665/120877415-5c4f7c00-c584-11eb-9ad8-ef8481e2ad51.png)
+    
+    * Masked self-attention layer
+        * Prevent vectors from looking at future vectors.
+        * Manually set alignment scores to -infinity
+          
+          ![image](https://user-images.githubusercontent.com/63558665/120877443-8f920b00-c584-11eb-9375-7e819ad1179e.png)
+   
+    * Multi self-attention layer
+    
+         ![image](https://user-images.githubusercontent.com/63558665/120877470-b3555100-c584-11eb-9b69-8f49e3fbe500.png)
+         
+     * General attention vs. self-attention
+        
+        ![image](https://user-images.githubusercontent.com/63558665/120877503-dda70e80-c584-11eb-9bff-7c05c2abc46f.png)
+
+* Transformer:No recurrence,Perhaps we don't need convolutions at all-->Transformers from pixels to language
+
+    ![image](https://user-images.githubusercontent.com/63558665/120877591-5f973780-c585-11eb-84e5-5db1867d7f12.png)
+    
+    encoder block:
+    
+    ![image](https://user-images.githubusercontent.com/63558665/120877608-76d62500-c585-11eb-8e00-d7bb5f35153f.png)
+    
+    decoder block:
+    
+    ![image](https://user-images.githubusercontent.com/63558665/120877620-89505e80-c585-11eb-96f7-abfa5a3d979a.png)
+
+* RNNs vs. Transformers
+    * RNNs
+        * LSTMs work reasonably well for long sequences.
+        * Expects an ordered sequences of inputs
+        * Sequential computation: subsequent hidden states can only be computed after the previous ones are done.
+
+    * Transformers:
+        * Good at long sequences. Each attention calculation looks at all inputs.
+        * Can operate over unordered sets or ordered sequences with positional encodings
+        * Parallel computation: All alignment and attention scores for all inputs can be done in parallel.
+        * Requires a lot of memory: N x M alignment and attention scalers need to be calculated and stored for a single self-attention head. (but GPUs are getting bigger and better)
+
+* Summary:
+    * Adding attention to RNNs allows them to "attend" to different parts of the input at every time step
+    * The general attention layer is a new type of layer that can be used to design new neural network architectures
+    * Transformers are a type of layer that uses self-attention and layer norm.
+        * It is highly scalable and highly parallelizable
+        * Faster training, larger models, better performance across vision and language tasks
+        * They are quickly replacing RNNs, LSTMs, and may even replace convolutions.
+
+# Gans
 
 * supervised learning: learn a funtion to map x-->y
      * classification,regression, object detection, semantic segmentation, image captioning
@@ -750,36 +842,51 @@ sequence to sequence :many to one (encoder)-->one to many (decoder)
     * Getting insights from high-dimensional data (physics, medical imaging, etc.)
     * Modeling physical world for simulation and planning (robotics and reinforcement learning applications)
 
-![image](https://user-images.githubusercontent.com/63558665/120584659-621b5500-c3fe-11eb-8b5b-6a16248291db.png)
+     ![image](https://user-images.githubusercontent.com/63558665/120584659-621b5500-c3fe-11eb-8b5b-6a16248291db.png)
 
-* pixelRNN and PixelCNN
- FVBN
- 
- ![image](https://user-images.githubusercontent.com/63558665/120584795-98f16b00-c3fe-11eb-9f6b-ee5405fb94f6.png)
- 
+* PixelRNN and PixelCNN
+   * FVBN--RNN (produce each possible pixel)
+     * Complex distribution over pixel values
+
    * pixelRNN:Generate image pixels starting from corner and Dependency on previous pixels modeled using an RNN (LSTM)
        
-       ![image](https://user-images.githubusercontent.com/63558665/120584918-d0f8ae00-c3fe-11eb-9087-7c408419bff2.png)
+        
+        * Drawback: sequential generation is slow in both training and inference!
+        
+            ![image](https://user-images.githubusercontent.com/63558665/120584918-d0f8ae00-c3fe-11eb-9087-7c408419bff2.png)
 
-        Drawback: sequential generation is slow in both training and inference!
+        
    * PixelCNN:Still generate image pixels starting from corner,Dependency on previous pixels now modeled using a CNN over context region
          
-        ![image](https://user-images.githubusercontent.com/63558665/120585029-08675a80-c3ff-11eb-9aa1-f7c02331131e.png)
+        * Training is faster than PixelRNN (can parallelize convolutions since context region values known from training images)
+        * Generation is still slow:For a 32x32 image, we need to do forward passes of the network 1024 times for a single image
+            
+            ![image](https://user-images.githubusercontent.com/63558665/120585029-08675a80-c3ff-11eb-9aa1-f7c02331131e.png)
 
-      Training is faster than PixelRNN (can parallelize convolutions since context region values known from training images)
-      Generation is still slow: For a 32x32 image, we need to do forward passes of the network 1024 times for a single image
 
-![image](https://user-images.githubusercontent.com/63558665/120585049-11f0c280-c3ff-11eb-88db-0a3ca6f3496f.png)
-* VAE:Variational Autoencoders
+      ![image](https://user-images.githubusercontent.com/63558665/120585049-11f0c280-c3ff-11eb-88db-0a3ca6f3496f.png)
+
+* VAE:Variational Autoencoders--Probabilistic spin on autoencoders - will let us sample from the model to generate data!
  
- ![image](https://user-images.githubusercontent.com/63558665/120585160-45cbe800-c3ff-11eb-941e-21711c12f057.png)
- No dependencies among pixels, can generate all pixels at the same time!
- Cannot optimize directly, derive and optimize lower bound on likelihood instead
- trained autoencoder-->decoder-->extract feature :Transfer from large, unlabeled dataset to small, labeled dataset.
- Autoencoders can reconstruct data, and can learn features to initialize a supervised model
- Features capture factors of variation in training data. 
- But we can’t generate new images from an autoencoder because we don’t know the space of z
+    ![image](https://user-images.githubusercontent.com/63558665/120585160-45cbe800-c3ff-11eb-941e-21711c12f057.png)
+ 
+   * No dependencies among pixels, can generate all pixels at the same time!
+   * Cannot optimize directly, derive and optimize lower bound on likelihood instead
+   * Autoencoder:Unsupervised approach for learning a lower-dimensional feature representation from unlabeled training data 
+
+        ![image](https://user-images.githubusercontent.com/63558665/120878117-59ef2100-c588-11eb-8e0b-829c4e25f797.png)
+
+        * z smaller than x
+        * Why dimensionality reduction?-->Want features to capture meaningful factors of variation in data
+        * How to learn feature?--> trained autoencoder that features can be used to reconstrcut original data with L2 loss function 
+        * Train encoder--> z-->decoder-->extract feature :Transfer from large, unlabeled dataset to small, labeled dataset.
+        * After training, throw away decoder
+        * The same as transfer learning--> using encoder features to fine tune encoder jointly with classifier
+        * But we can’t generate new images from an autoencoder because we don’t know the space of z
+      
+      
  ![image](https://user-images.githubusercontent.com/63558665/120585413-afe48d00-c3ff-11eb-801d-54ded05cd109.png)
+ 
  Choose prior p(z) to be simple, e.g.Gaussian. Reasonable for latent attributes, e.g. pose, how much smile
  
  ![image](https://user-images.githubusercontent.com/63558665/120585901-92fc8980-c400-11eb-823d-40ab9b13d120.png)
