@@ -67,7 +67,7 @@ efficiently finding the parameters that minimize the loss function. (optimizatio
 
    ![image](https://user-images.githubusercontent.com/63558665/120116601-d6cc6600-c156-11eb-8826-46c3bdeca9d0.png)
       
-* SVM loss: 错误分类更高的分数，正确分类 is 0, l1 and l2 SVM loss:difference in score between correct and incorrect class
+* SVM loss: correct classification is 0, l1 and l2 SVM loss:difference in score between correct and incorrect class
 
      ![image](https://user-images.githubusercontent.com/63558665/120117034-257aff80-c159-11eb-9ced-793c3a178ba3.png)
 
@@ -81,7 +81,7 @@ efficiently finding the parameters that minimize the loss function. (optimizatio
          * whether w is unique? it is no unique w=2w and L=0---> which is better w or 2w?--->reguralization
          * The same output with different weight and how to determine which is better?<--reguralization 
            
-     ![image](https://user-images.githubusercontent.com/63558665/120713457-ebc73300-c48f-11eb-851f-4e1b608317fd.png)
+          ![image](https://user-images.githubusercontent.com/63558665/120713457-ebc73300-c48f-11eb-851f-4e1b608317fd.png)
 
 * Regularization:Prevent the model from doing too well on training data
            
@@ -94,7 +94,7 @@ efficiently finding the parameters that minimize the loss function. (optimizatio
         * make the model simple so it works test data
         * improve optimization by adding curvature
                                  
-* softmax: interpret classifier score into probability, probability sum to 1,Choose weights to maximize the
+* Softmax: interpret classifier score into probability, probability sum to 1,Choose weights to maximize the
 likelihood of the observed data
             
    ![image](https://user-images.githubusercontent.com/63558665/120117288-763f2800-c15a-11eb-9c20-b11ab39c2090.png)
@@ -107,14 +107,14 @@ likelihood of the observed data
    
    ![image](https://user-images.githubusercontent.com/63558665/120714559-5cbb1a80-c491-11eb-93b9-ddc8fbed5a4b.png)
 
-* optimization: how to find the best w?
+* Optimization: how to find the best w?
      * strategy 1: random search
      * startegy 2: follow the slope-->gradient descent
 
 Three loss function: linear loss, SVM loss, softmax and data loss_reguralization     
         
 # Neural network-multiple layers neural network
-* linear classifier is not useful and can only draw  linear decision boundaries-->featuere transformation: f(x, y) = (r(x, y), θ(x, y))
+* Linear classifier is not useful and can only draw  linear decision boundaries-->featuere transformation: f(x, y) = (r(x, y), θ(x, y))
 
    ![image](https://user-images.githubusercontent.com/63558665/120117682-54df3b80-c15c-11eb-9cbc-26906f99b548.png)
 
@@ -130,13 +130,13 @@ Three loss function: linear loss, SVM loss, softmax and data loss_reguralization
    
    ![image](https://user-images.githubusercontent.com/63558665/120117774-ca4b0c00-c15c-11eb-8930-57187382e583.png)
 
-* derive delta_w L on paper?
+* Derive delta_w L on paper?
     * Very tedious: Lots of matrix calculus, need lots of paper
     * What if we want to change loss? E.g. use softmax instead of SVM? Need to re-derive from scratch
     * Not feasible for very complex models!
 --> Backpropagation+ computational graph-->chain rule
 
-![image](https://user-images.githubusercontent.com/63558665/120716932-b8d36e00-c494-11eb-8a9d-c4a1c07826cd.png)
+   ![image](https://user-images.githubusercontent.com/63558665/120716932-b8d36e00-c494-11eb-8a9d-c4a1c07826cd.png)
 
 * Summary
     * (Fully-connected) Neural Networks are stacks of linear functions and nonlinear activation functions; they have much more representational
@@ -156,7 +156,7 @@ Three loss function: linear loss, SVM loss, softmax and data loss_reguralization
    
     ![image](https://user-images.githubusercontent.com/63558665/120119656-e05dca00-c166-11eb-9929-155a02c62103.png)
    
-* low-level features-->high level features
+* Low-level features-->High level features
 convolution architecture: convolution layer-->ReLU-->pooling layer-->fully connected layer
    
    ![image](https://user-images.githubusercontent.com/63558665/120119722-53ffd700-c167-11eb-8176-f08cdaa0f499.png)
@@ -177,7 +177,7 @@ convolution architecture: convolution layer-->ReLU-->pooling layer-->fully conne
    
 * Padding:control the spatial size of the output volumes,most commonly as we’ll see soon we will use it to exactly preserve the spatial size of the input volume so the input and output width and height are the same
    
-# Convolutional Neural Networks and training
+# Convolutional Neural Networks
 Detection and segmentation，classification,image caption, style transfer learning
 
 * Fully connect layer:
@@ -193,7 +193,7 @@ Detection and segmentation，classification,image caption, style transfer learni
  output size: (N - F) / stride + 1     (N + 2P - F) / stride + 1
  parameters: F2CK+k
  
-* pooling layer: makes the representations smaller and more manageable, downsample,operates over each activation map independently
+* Pooling layer: makes the representations smaller and more manageable, downsample,operates over each activation map independently
         * Maxpooling
         * global pooling
         * average pooling
@@ -425,13 +425,25 @@ For sparse data use the optimizers with dynamic learning rate.If, want to use gr
     * No gap between train / val means underfitting: train longer, use a bigger model
 
 # CNN architecture
-* LeNet-5
+* LeNet-5: Recognizing simple digit images
 
   ![image](https://user-images.githubusercontent.com/63558665/120122674-2ec79480-c178-11eb-9ddf-e0fea9dcef24.png)
-* ad:
-* disad:
+
+    * ad:
+        * Possesses the basic units of convolutional neural network,such as convolutional layer, pooling layer and full connection layer
+        * Every convolutional layer includes three parts: convolution (5x5+2 padding), pooling(2x2+2 strid), and nonlinear activation functions(Tanh)
+        * Using convolution to extract spatial features and weight share to reduce the computation complexity
+        * Downsampling average pooling layer
+        * Tanh activation function
+        * Using MLP as the last classifier
+        * Sparse connection between layers to reduce the complexity of computation
+        * 对于分类（Classification）问题，利用全局平均池化（Global Average Pooling, GAP）操作代替特征图的拉伸，这样 CNN 便可以处理各种尺度的图像了
+    * disad:
+        * Tanh--> vanishing gradient
+        
 * AlexNet:
-    * five conv layers
+
+    * five conv layers and 5 layers (11x11,5x5,3x3)
     * Max pooling is applied between every two conv layers
     * After the tensors are flattened, two fully‐connected (dense) layers are used
     * The output layer is a softmax layerto compute the softmax loss function for learning
@@ -446,57 +458,177 @@ For sparse data use the optimizers with dynamic learning rate.If, want to use gr
     ![image](https://user-images.githubusercontent.com/63558665/120122711-68000480-c178-11eb-8454-f9cfe86285db.png)
     
     * ad:
-        * AlexNet is considered as the milestone of CNN for image classification
-        * The unique advantage ofAlexNet is the directly image input to the classification model
-        * The convolution layers can automatically extract the edges of the images, and fully connected layers learning these features 
-        * Many methods such as the conv+pooling design, dropout,GPU, parallel computing, ReLU is still the industrial standard for computer vision
+        * Replace Tanh with ReLU-->gradient vanishing and faster converge
+        * Local Response Normalization-->overfitting
+        * Pooling with smaller stride than convolution stride--> overlapping pooling-->overfitting
+        * Data augmentation with random crop and reflection
+        * Dropout--> avoiding overfitting. 
+        * The unique advantage of AlexNet is the directly image input to the classification model
+        * double GPU network structure
     * disad:
         * AlexNet is NOT deep enough compared to the later model such asVGG Net, GoogLENet, and ResNet
         * The use of large convolution filters (5*5 and 11*11) is not encouraged shortly after that
         * Use normal distribution to initiate the weights in the neural networks cannot effective solve the problem of gradient vanishing, replaced bythe Xavier method late
+        * max-pooling layers result in loss of accurate spatial information
+        * Smaller compute, still memory heavy, lower accuracy
     
 * ZFNet: Improved hyperparameters over AlexNet
    Alexnet: CONV1: change from (11x11 stride 4) to (7x7 stride 2)
    CONV3,4,5: instead of 384, 384, 256 filters use 512, 1024, 512
 
-* VGGNet:Deeper network
-    * 8 layers AlexNet-->16 layers-19 layers(VGG16Net)
-    * Only 3x3 CONV stride 1, pad 1 and 2x2 MAX POOL stride 2
-    * Why use smaller filters? (3x3 conv) ?
-    Stack of three 3x3 conv (stride 1) layers has same effective receptive field as one 7x7 conv layer.But deeper, more non-linearities.fewer parameters
+* VGGNet:Deeper network--> complex network will overfit training data
 
     ![image](https://user-images.githubusercontent.com/63558665/120122818-46534d00-c179-11eb-89eb-de3a5eff18ab.png)
+    
+    * ad:
+        * Multiple conv layers to form conv layer group then pooling
+        * Instead of using large receptive fields like AlexNet (11x11 with a stride of 4), VGG uses very small receptive fields (3x3 with a stride of 1). Only 3x3 CONV stride 1, pad 1 and 2x2 MAX POOL stride 2 compared with AlexNet
+        * VGG incorporates 1x1 convolutional layers to make the decision function more non-linear without changing the receptive fields.
+        * The small-size convolution filters allows VGG to have a large number of weight layers
+        * more layers leads to improved performance. Deeper network--> 8 layers AlexNet-->16 layers-19 layers(VGG16Net)
+        * No LRN
+        * Why use smaller filters? (3x3 conv) ?
+           
+           Stack of three 3x3 conv (stride 1) layers has same effective receptive field as one 7x7 conv layer.But deeper, more non-linearities.fewer parameters
     
     * disad: 
         * There are only a few exceptions when multi-scale training images are involved
         * Most memory is in early conv
         * Most params are in late FC
         * Computation expensive
+        * most parameters, most operations
         
 * GoogleNet: deeper but more computational
-22 layers--Efficient “Inception” module--No FC layers
 
-![image](https://user-images.githubusercontent.com/63558665/120122953-21130e80-c17a-11eb-9a0f-367289289f52.png)
+    22 layers--Efficient “Inception” module--No FC layers
+    1x1 convolution-->dimension reduction +preserves spatial dimensions, reduces depth!
+    The larger the model and the more the network parameters, the more likely it is to produce over-fitting. Therefore, a larger data set is required. However, the construction cost of large data sets is very high; the larger the model, the greater the cost of computing resources. The greater the demand, this is unacceptable in actual tasks. 
+    
+    * Inception Net V1:
+        * ad
+            * fewer parameters
+            * Increase width not only depth
+            * Replace the fully connected layers by the sparse ones
+            * feature extract from 3x3 and 5x5 conv more thatn others--> more parameters-->“bottleneck” layers that use 1x1 convolutions to reducefeature channel size
+            * Multiple receptive field sizes for convolution (1x1, 3x3, 5x5)
+            * a global average pooling layer is used that spatially averages across each feature map, before final FC layer.
+            * No FC layers
+ 
+              ![image](https://user-images.githubusercontent.com/63558665/120852679-84b98500-c548-11eb-82af-391a7231fe99.png)
+              
+              ![image](https://user-images.githubusercontent.com/63558665/120123059-c4fcba00-c17a-11eb-8796-d1cfe67033b6.png)
+    
+        * disad:
+            * Computational complexity
+            * Pooling layer also preserves feature depth, which means total depth after concatenation can only grow at every layer!
+            
+    * Inception Net V2: batch normalization
+        * 5x5 replace with 2 3x3 conv
+        * Average pooling +max pooling
+        * 两个 Inception Module 之间不再进行池化操作
+        * 将网络第一层的卷积层替换为深度乘子为 8 的可分离卷积 Separable Convolution
+        * 增大学习率，移除 Dropout，减小 L2 正则化项，加速学习率衰减，移除 LRN，更彻底的打乱训练数据，减少光学畸变
 
-Computational complexity/Pooling layer also preserves feature depth, which means total depth after concatenation can only grow at every layer
----> bottleneck that 1x1 convolution to feature channel size
+          ![image](https://user-images.githubusercontent.com/63558665/120853157-3c4e9700-c549-11eb-918e-51540262889a.png)
+          
+    * Inception Net V3:
+        * Avoid representational bottlenecks, especially early in the network--> n × 1 和 1 × n to replace  nxn conv
+        * Higher dimensional representations are easier to process locally within a network.
+        * Spatial aggregation can be done over lower dimensional embeddings without much or any loss in representational power.
+        * Balance the width and depth of the network.
+        * Auxiliary Classifier--> setting additional loss in differnt inception (3c +4e)--> avoid vanishing gradient+improve training speed--reguralization
+        * Auxiliary classification outputs to inject additional gradient at lower layers
+          
+          ![image](https://user-images.githubusercontent.com/63558665/120854015-81bf9400-c54a-11eb-926f-4abf6957cc68.png)
+    
+    * Inception Net V4: combine Inception Module, Residual Connection, Depthwise Seperable Convolution
+    
+        ![image](https://user-images.githubusercontent.com/63558665/120123142-2fadf580-c17b-11eb-99fb-3cba5243e6db.png)
+    
+    * Xception: 利用 Depthwise Separable Convolution 对 Inception V3 进行了改进，并结合 Residual Connection
+            
+         ![image](https://user-images.githubusercontent.com/63558665/120854561-56897480-c54b-11eb-9e75-bd4eb4436410.png)
+
+    * ResNet:
+         * No FC layers besides FC 1000 to output classes
+         * Global average pooling layer after last conv layer
+         * Additional conv layer at the beginning (stem)
+         * Stack residual blocks and Every residual block has two 3x3 conv layers
+         * double # of filters and downsample spatially using stride 2 (/2 in each dimension)
+         * For deeper networks,use “bottleneck” layer to improve efficiency (similar to GoogLeNet) (50,101,152)
+         * Moderate efficiency depending on model, highest accuracy
+         
+            ![image](https://user-images.githubusercontent.com/63558665/120123160-43f1f280-c17b-11eb-8a25-a96833914993.png)
+        
+         * Training:
+             * Batch Normalization after every CONV layer
+             * Xavier initialization from He et al.
+             * SGD + Momentum (0.9)
+             * Learning rate: 0.1, divided by 10 when validation error plateaus
+             * Mini-batch size 256
+             * Weight decay of 1e-5
+             * No dropout used
+         
+        The deeper model performs worse, but it’s not caused by overfitting!-->deeper models are harder to optimize
+        
+        Deeper models are harder to optimize--> A solution by construction is copying the learned layers from the shallower model and setting additional layers to identity mapping.
+        
+    * sENet: Improving ResNets
+        * Add a “feature recalibration” module that learns to adaptively reweight feature maps
+        * Global information (global avg. pooling layer) + 2 FC layers used to determine feature map weights
+        
+          ![image](https://user-images.githubusercontent.com/63558665/120859229-e8947b80-c551-11eb-8ba1-167845b1bc65.png)
+    
+    * Identity Mappings in Deep Residual Networks
+        * Improved ResNet block design from creators of ResNet
+        * Creates a more direct path for propagating information throughout network
+        * Gives better performance
+        
+          ![image](https://user-images.githubusercontent.com/63558665/120859421-2b565380-c552-11eb-8248-29b52991fe7f.png)
+   
+   * Wide Residual Networks
+       * Argues that residuals are the important factor, not depth
+       * User wider residual blocks (F x k) filters instead of F filters in each layer)
+       * 50-layer wide ResNet outperforms 152-layer original ResNet
+       * Increasing width instead of depth more computationally efficient (parallelizable)
        
-![image](https://user-images.githubusercontent.com/63558665/120123059-c4fcba00-c17a-11eb-8796-d1cfe67033b6.png)
-![image](https://user-images.githubusercontent.com/63558665/120123098-eeb5e100-c17a-11eb-8eb3-dbb96e622ce7.png)
+           ![image](https://user-images.githubusercontent.com/63558665/120859573-63f62d00-c552-11eb-9aed-ec8bb001fe63.png)
+    
+    * DenseNet
+        * Dense blocks where each layer is connected to every other layer in feedforward fashion
+        * Alleviates vanishing gradient, strengthens feature propagation, encourages feature reuse
+        * Showed that shallow 50-layer network can outperform deeper 152 layer ResNet
+        
+           ![image](https://user-images.githubusercontent.com/63558665/120859754-a7509b80-c552-11eb-9b4b-1c9322ce09ae.png)
+    
+    * MobileNets
+        * Depthwise separable convolutions replace standard convolutions by factorizing them into a depthwise convolution and a 1x1 convolution
+          
+          ![image](https://user-images.githubusercontent.com/63558665/120859884-d6ffa380-c552-11eb-9d46-d4fc35942014.png)
+    
+    * NAS
+        * “Controller” network that learns to design a good network architecture (output a string corresponding to network design)
+        * Sample an architecture from search space
+        * Train the architecture to get a “reward” R corresponding to accuracy
+        * Compute gradient of sample probability, and scale by R to perform controller parameter update (i.e. increase likelihood of good architecture being sampled,decrease likelihood of bad architecture)
+    
+* Summary:
+    * AlexNet showed that you can use CNNs to train Computer Vision models.
+    * ZFNet, VGG shows that bigger networks work better
+    * GoogLeNet is one of the first to focus on efficiency using 1x1 bottleneck convolutions and global avg pool instead of FC layers
+    * ResNet showed us how to train extremely deep networks
+        * Limited only by GPU & memory!
+        * Showed diminishing returns as networks got bigger After ResNet: CNNs were better than the human metric and focus shifted to Efficient networks:
+        * Lots of tiny networks aimed at mobile devices: MobileNet, ShuffleNet
+    * Neural Architecture Search can now automate architecture design
+    * Many popular architectures available in model zoos
+    * ResNet and SENet currently good defaults to use
+    * Networks have gotten increasingly deep over time
+    * Many other aspects of network architectures are also continuously being investigated and improved
 
-after the last convolutional layer, a global average pooling layer is used that spatially averages across each feature map, before final FC layer. No longer multiple expensive FC layers!
 
-![image](https://user-images.githubusercontent.com/63558665/120123142-2fadf580-c17b-11eb-99fb-3cba5243e6db.png)
-
-* ResNet:
-![image](https://user-images.githubusercontent.com/63558665/120123160-43f1f280-c17b-11eb-8a25-a96833914993.png)
-The deeper model performs worse, but it’s not caused by overfitting!
-deeper models are harder to optimize--> A solution by construction is copying the learned layers from the shallower model and setting additional layers to identity mapping.
-
-![image](https://user-images.githubusercontent.com/63558665/120123268-dd210900-c17b-11eb-8d03-1cb5d374593f.png)
-
-### 7) RNN: 
-* application: 
+# RNN: Recurrent Neural Networks
+* Application: 
    * image caption: one to many
    * action prediction: many to one
    * Video Captioning: many to many
@@ -506,75 +638,104 @@ deeper models are harder to optimize--> A solution by construction is copying th
    * Visual Dialog: Conversations about images
    * Visual Language Navigation: Go to the living room
    * Visual Question Answering: Dataset Bias
+   
 * Why not existing convnet?
-Variable sequence length inputs and outputs! --> input and output are also variable
+
+  Variable sequence length inputs and outputs! --> input and output are also variable
 
 * RNN: RNNs have an “internal state” that is updated as a sequence is processed
-1. hidden state update: h_t=fw(h_t_1,x)
+    Update internal state and then update output
+    1. hidden state update: h_t=fw(h_t_1,x)
 
-![image](https://user-images.githubusercontent.com/63558665/120261845-bdb2da80-c266-11eb-9248-3ec140e39bc2.png)
+        ![image](https://user-images.githubusercontent.com/63558665/120261845-bdb2da80-c266-11eb-9248-3ec140e39bc2.png)
 
-2.Output generation:y_t=f(h_t)
+    2. Output generation: y_t=f(h_t)
 
-![image](https://user-images.githubusercontent.com/63558665/120261951-f488f080-c266-11eb-806e-b05f191475a8.png)
+         ![image](https://user-images.githubusercontent.com/63558665/120261951-f488f080-c266-11eb-806e-b05f191475a8.png)
 
 Notice: the same function and the same set of parameters are used at every time step.
 
 sequence to sequence :many to one (encoder)-->one to many (decoder)
 
-![image](https://user-images.githubusercontent.com/63558665/120262874-96f5a380-c268-11eb-8b68-aa3d1cd1e00a.png)
+   ![image](https://user-images.githubusercontent.com/63558665/120262874-96f5a380-c268-11eb-8b68-aa3d1cd1e00a.png)
 
-Carry hidden states forward in time forever, but only backpropagate for some smaller number of steps.Re-use the same weight matrix at every time-step
-![image](https://user-images.githubusercontent.com/63558665/120123592-b2d04b00-c17d-11eb-89ce-c0f7fd4d0b66.png)
+  Re-use the same weight matrix at every time-step
 
-RNN Advantages:
-- Can process any length input
-- Computation for step t can (in theory) use information from many steps
-back
-- Model size doesn’t increase for longer input
-- Same weights applied on every timestep, so there is symmetry in how
-inputs are processed.
-RNN Disadvantages:
-- Recurrent computation is slow
-- In practice, difficult to access information from many steps back
+   
+   3. Backpropagation through time
+       * Forward through entire sequence to compute loss, then backward through entire sequence to compute gradient
+       * Run forward and backward through chunks of the sequence instead of whole sequence. Carry hidden states forward in time forever, but only backpropagate for some smaller number of steps.
+   
+          ![image](https://user-images.githubusercontent.com/63558665/120123592-b2d04b00-c17d-11eb-89ce-c0f7fd4d0b66.png)
+   
+   4. RNN tradeoffs
+      * Advantages:
+          * Can process any length input
+          * Computation for step t can (in theory) use information from many steps back
+          * Model size doesn’t increase for longer input
+          * Same weights applied on every timestep, so there is symmetry in how inputs are processed.
+      * Disadvantages:
+          * Recurrent computation is slow
+          * In practice, difficult to access information from many steps back
+    
+   5. Multiple layers RNN:
 
-* Multiple layers RNN:
+       ![image](https://user-images.githubusercontent.com/63558665/120263949-c0afca00-c26a-11eb-95e1-acd51036e1f0.png)
 
-![image](https://user-images.githubusercontent.com/63558665/120263949-c0afca00-c26a-11eb-95e1-acd51036e1f0.png)
+   6. LSTM: RNN-->vanishing gradient
+      
+      ![image](https://user-images.githubusercontent.com/63558665/120264441-cfe34780-c26b-11eb-815c-996ecdef1ff7.png)
+      
+      ![image](https://user-images.githubusercontent.com/63558665/120264411-bcd07780-c26b-11eb-99bc-cd7d87bb3ce6.png)
 
-* LSTM: RNN-->vanishing gradient
+      ![image](https://user-images.githubusercontent.com/63558665/120264615-28b2e000-c26c-11eb-8f5e-f79b7b715b16.png)
 
-![image](https://user-images.githubusercontent.com/63558665/120264411-bcd07780-c26b-11eb-99bc-cd7d87bb3ce6.png)
+      ![image](https://user-images.githubusercontent.com/63558665/120264629-2ea8c100-c26c-11eb-9040-6bcc8dac51a5.png)
+      
+      * Backpropagation from ct to ct-1 only elementwise multiplication by f, no matrix multiply by W--LSTM
+      
+      * Notice that the gradient contains the f gate’s vector of activations
+          * allows better control of gradients values, using suitable parameter updates of the forget gate.
+      * Also notice that are added through the f, i, g, and o gates
+          * better balancing of gradient values
+      * The LSTM architecture makes it easier for the RNN to preserve information over many timesteps
+          * e.g. if the f = 1 and the i = 0, then the information of that cell is preserved
+          indefinitely.
+          * By contrast, it’s harder for vanilla RNN to learn a recurrent weight matrix Wh that preserves info in hidden state
+      * LSTM doesn’t guarantee that there is no vanishing/exploding gradient, but it does provide an easier way for the model to learn long-distance dependencies         * Uninterrupt gradient/Use variants like GRU if you want faster compute and less parameters
+      * Common to use LSTM or GRU: their additive interactions improve gradient flow  Backward flow of gradients in RNN can explode or vanish. Exploding is controlled with gradient clipping. Vanishing is controlled with additive interactions (LSTM)
+      * Better/simpler architectures are a hot topic of current research, as well as new paradigms for reasoning over sequences
+  
+  7. GRU
+       
+       ![image](https://user-images.githubusercontent.com/63558665/120875413-bbf45a00-c579-11eb-8302-333e34f40afd.png)
 
-![image](https://user-images.githubusercontent.com/63558665/120264441-cfe34780-c26b-11eb-815c-996ecdef1ff7.png)
+   8. RNN architecture:
+      * many to many
+      
+          ![image](https://user-images.githubusercontent.com/63558665/120123662-18243c00-c17e-11eb-953e-df597f42170d.png)
 
-![image](https://user-images.githubusercontent.com/63558665/120264615-28b2e000-c26c-11eb-8f5e-f79b7b715b16.png)
-![image](https://user-images.githubusercontent.com/63558665/120264629-2ea8c100-c26c-11eb-9040-6bcc8dac51a5.png)
-Notice that the gradient contains the f gate’s vector of activations
-- allows better control of gradients values, using suitable parameter updates of the
-forget gate.
-Also notice that are added through the f, i, g, and o gates
-- better balancing of gradient values
-The LSTM architecture makes it easier for the RNN to preserve information over many timesteps
-- e.g. if the f = 1 and the i = 0, then the information of that cell is preserved
-indefinitely.
-- By contrast, it’s harder for vanilla RNN to learn a recurrent weight matrix Wh that preserves info in hidden state
-LSTM doesn’t guarantee that there is no vanishing/exploding gradient, but it does provide an easier way for the model to learn long-distance dependencies
-Uninterrupt gradient/Use variants like GRU if you want faster compute and less parameters
-Common to use LSTM or GRU: their additive interactions improve gradient flow  Backward flow of gradients in RNN can explode or vanish. Exploding is controlled with gradient clipping. Vanishing is controlled with additive interactions (LSTM)
-Better/simpler architectures are a hot topic of current research, as well as new paradigms for reasoning over sequences
-![image](https://user-images.githubusercontent.com/63558665/120123662-18243c00-c17e-11eb-953e-df597f42170d.png)
+      * many-->one: : Encode input sequence in a single vector
 
-many-->one: : Encode input sequence in a single vector
+          ![image](https://user-images.githubusercontent.com/63558665/120123659-10fd2e00-c17e-11eb-8335-175e50c6648a.png)
 
-![image](https://user-images.githubusercontent.com/63558665/120123659-10fd2e00-c17e-11eb-8335-175e50c6648a.png)
+      * one-->many: : Produce output sequence from single input vector
 
-one-->many: : Produce output sequence from single input vector
+          ![image](https://user-images.githubusercontent.com/63558665/120123650-05aa0280-c17e-11eb-94f5-e15ce557d91d.png)
 
-![image](https://user-images.githubusercontent.com/63558665/120123650-05aa0280-c17e-11eb-94f5-e15ce557d91d.png)
-![image](https://user-images.githubusercontent.com/63558665/120123743-a7315400-c17e-11eb-9814-85b0e3a5061b.png)
-
+          ![image](https://user-images.githubusercontent.com/63558665/120123743-a7315400-c17e-11eb-9814-85b0e3a5061b.png)
+   9. Summay
+   * LSTM were a good default choice until this year
+   * Use variants like GRU if you want faster compute and less parameters
+   * Use transformers (next lecture) as they are dominating NLP models
+   * almost everyday there is a new vision transformer model
+   * RNNs allow a lot of flexibility in architecture design
+   * Vanilla RNNs are simple but don’t work very well
+   * Common to use LSTM or GRU: their additive interactions improve gradient flow
+   * Backward flow of gradients in RNN can explode or vanish. Exploding is controlled with gradient clipping. Vanishing is controlled with additive interactions (LSTM)
+   * Better/simpler architectures are a hot topic of current research as well as new paradigms for reasoning over sequences
 ###9） supervised learning vs. unsupervised learning
+
 
 * supervised learning: learn a funtion to map x-->y
      * classification,regression, object detection, semantic segmentation, image captioning
