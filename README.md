@@ -829,13 +829,14 @@ sequence to sequence :many to one (encoder)-->one to many (decoder)
 
 # Gans
 
-* supervised learning: learn a funtion to map x-->y
+* Supervised learning: learn a funtion to map x-->y
      * classification,regression, object detection, semantic segmentation, image captioning
-* unsupervised learning:Learn some underlying hidden structure of the data
+* Unsupervised learning:Learn some underlying hidden structure of the data
      * clustering, dimensionality reduction,feature learning, density estimation
 
 * Generative Models:Given training data, generate new samples from same distribution,Learn pmodel(x) that approximates pdata(x).Sampling new x from pmodel(x)
-
+   (Pixel distribution)
+   
 * why genrative model?
     * Realistic samples for artwork, super-resolution, colorization, etc
     * Learn useful features for downstream tasks such as classification.
@@ -872,6 +873,7 @@ sequence to sequence :many to one (encoder)-->one to many (decoder)
  
    * No dependencies among pixels, can generate all pixels at the same time!
    * Cannot optimize directly, derive and optimize lower bound on likelihood instead
+   
    * Autoencoder:Unsupervised approach for learning a lower-dimensional feature representation from unlabeled training data 
 
         ![image](https://user-images.githubusercontent.com/63558665/120878117-59ef2100-c588-11eb-8e0b-829c4e25f797.png)
@@ -885,29 +887,122 @@ sequence to sequence :many to one (encoder)-->one to many (decoder)
         * But we can’t generate new images from an autoencoder because we don’t know the space of z
       
       
- ![image](https://user-images.githubusercontent.com/63558665/120585413-afe48d00-c3ff-11eb-801d-54ded05cd109.png)
- 
- Choose prior p(z) to be simple, e.g.Gaussian. Reasonable for latent attributes, e.g. pose, how much smile
- 
- ![image](https://user-images.githubusercontent.com/63558665/120585901-92fc8980-c400-11eb-823d-40ab9b13d120.png)
+     ![image](https://user-images.githubusercontent.com/63558665/120585413-afe48d00-c3ff-11eb-801d-54ded05cd109.png)
 
- ![image](https://user-images.githubusercontent.com/63558665/120586079-dd7e0600-c400-11eb-814d-b578c9223a57.png)
+     Choose prior p(z) to be simple, e.g.Gaussian. Reasonable for latent attributes, e.g. pose, how much smile
+
+     ![image](https://user-images.githubusercontent.com/63558665/120585901-92fc8980-c400-11eb-823d-40ab9b13d120.png)
+
+    
+    * Variational inference is to approximate the unknown posterior distribution from only the observed data x rather than latent z
+       
+       ![image](https://user-images.githubusercontent.com/63558665/121260154-f6fad400-c87e-11eb-976f-2d6697fb5b56.png)
+       
+       ![image](https://user-images.githubusercontent.com/63558665/121260440-58bb3e00-c87f-11eb-84b3-e0080642bdc9.png)
+       
+       ![image](https://user-images.githubusercontent.com/63558665/121260544-79839380-c87f-11eb-93c9-c367f86fdede.png)
 
 
 * Why dimensionality reduction?
-Want features to capture meaningful factors of variation in data
+  
+  Want features to capture meaningful factors of variation in data
 
-* GANS: Sample from a simple distribution we can easily sample from, e.g. random noise.Learn transformation to training distribution.
+* GANS: not explicit dense function
+  
+  Sample from a simple distribution we can easily sample from, e.g. random noise.Learn transformation to training distribution.
+  
   But we don’t know which sample z maps to which training image -> can’t learn by reconstructing training images
+ 
   Solution: Use a discriminator network to tell whether the generate image is within data distribution (“real”) or not
   
   Discriminator network: try to distinguish between real and fake images
-  Generator network: try to fool the discriminator by generating real-looking images
-  minmax game
+  
+  Generator network: try to fool the discriminator by generating real-looking images. just like minmax game
+  
   Discriminator (θd) wants to maximize objective such that D(x) is close to 1 (real) and D(G(z)) is close to 0 (fake)
-  Generator (θg) wants to minimize objective such that D(G(z)) is close to 1 (discriminator is fooled into thinking generated G(z) is real)
+  
+  Generator (θg) wants to maximize likelihood of discriminator being wrong.
+  
   ![image](https://user-images.githubusercontent.com/63558665/120586384-714fd200-c401-11eb-8590-c944d7c73f4d.png)
+  
   ![image](https://user-images.githubusercontent.com/63558665/120586592-cdb2f180-c401-11eb-88db-4964a8c29e15.png)
   
   ![image](https://user-images.githubusercontent.com/63558665/120586621-da374a00-c401-11eb-920b-5c5201c524cd.png)
+  
+  after training, using gans to generate new images
+* How to choose k?
+  
+  k=1 is stable
+  
+*  Generative Adversarial Nets: Convolutional Architectures
+
+   Generator is an upsampling network with fractionally-strided convolution. Discriminator is a convolutional network
+   
+   * Replace any pooling layers with stried convolutions (descriminator) and fractional_strided convolution (generator)
+   * Use BatchNorm in the both generator and descriminator
+   * Remove fully connected hidden layers for deeper architecture
+   * Use ReLU activation in generator for all layers expect for output, which uses Tanh
+   * Use Leaky ReLu activation in descriminator for all layers
+   
+*  Generative Adversarial Nets: Interpretable Vector Math
+*  Gans application:
+    *  Target domain transfer
+    *  Image synthesis
+    *  Label to stress scene
+    *  Aerial Mapping
+    *  Day to night
+    *  BW to color images
+    *  edges to photo
+    *  high resolution images
+    *  Image repair and paiting
+    *  scene graphs to gans: specify what kind of image you want to generate
+    *  label generation
+* Summary:
+    * Don’t work with an explicit density function
+    * Unstable to train Gans (Wasserstein GAN, LSGAN, many others)
+    * Conditional GANs, GANs for all kinds of applications
+
+   Pretext task learning good feature extractor from self-supervised  tasks--> Attach a shallow network on feature extractor; train shallow network on the target task with   small amount of labeled data
+   
+* Pretext task:predict rotation/predict missing pixel/reconstruct missing pixel (cut image and train model with missing image)
+  
+  * colorization: color image--> gray image--> training model--> compare color image with predict image
+  
+* Visualization:
+   
+  * PCA/T-SNE
+  * faster style transfer
+  * Many methods for understanding CNN representations
+  * Activations: Nearest neighbors, Dimensionality reduction, maximal patches, occlusion
+  * Gradients: Saliency maps, class visualization, fooling images, feature inversion 
+  * Fun: DeepDream, Style Transfer.
+
+# Detection and Segmentation:
+* semantic segmentation:
+    * Semantic Segmentation Idea: Sliding Window--> Impossible to classify without context+ very expensive
+    * Semantic Segmentation Idea: Fully Convolutional
+    * Convultion: convolutions at original image resolution will be very expensive--> downsampling  and upsampling inside network
+    * downsapling: pooling/strideed convolution 
+    * Upsampling:Nearest Neighbor, bedof nails,max unpooling using the position from pooling layer, learnable upsampling,Transposed convolution
+
+* Object detection:
+    * two stages and single stage object detection
+    * Treat localization as a regression problem!-l2 loss
+    * Softmax loss+L2 loss=multiple task loss
+    * Each image needs a different number of outputs!
+    * Problem: Need to apply CNN to huge number of locations, scales, and aspect ratios, very computationally expensive!
+
+    * RCNN: Region Proposals:selective Search gives 2000 region proposals in a few seconds on CPU-->Very slow! Need to do ~2kindependent forward passes for each image!
+    * Fast-RCNN: convt-->region proposals-->crop+resize features-->CNN -->(linear softmax)+(linear)
+    * Running time domain by region proposals
+    * Faster-RCNN:Make CNN to proposal(RPN)
+    
+      ![image](https://user-images.githubusercontent.com/63558665/121267647-848ff100-c88a-11eb-9117-e313b70f53c8.png)
+    * single-stage:YOLO / SSD / RetinaNet-->7 x 7 x (5 * B + C)
+
+* Instance segmentaion:
+* Mask R-CNN: add small mask network that operates on each ROI and predicts a 28x28 binary mask--> predict a mask for each class
+
+
+
 
