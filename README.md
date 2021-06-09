@@ -1004,5 +1004,22 @@ sequence to sequence :many to one (encoder)-->one to many (decoder)
 * Mask R-CNN: add small mask network that operates on each ROI and predicts a 28x28 binary mask--> predict a mask for each class
 
 
+* R-CNN: Bounding boxes are proposed by the “selective search” algorithm, each of which is stretched and features are extracted via a deep convolutional neural network, such as AlexNet, before a final set of object classifications are made with linear SVMs.
+
+  ![image](https://user-images.githubusercontent.com/63558665/121413858-1bfd4e80-c934-11eb-907c-5f30ce9a269c.png)
+  
+    * It still takes a huge amount of time to train the network as you would have to classify 2000 region proposals per image.
+    * It cannot be implemented real time as it takes around 47 seconds for each test image.
+    * The selective search algorithm is a fixed algorithm. Therefore, no learning is happening at that stage. This could lead to the generation of bad candidate region proposals.
+    
+* Fast R-CNN: The approach is similar to the R-CNN algorithm. But, instead of feeding the region proposals to the CNN, we feed the input image to the CNN to generate a convolutional feature map. From the convolutional feature map, we identify the region of proposals and warp them into squares and by using a RoI pooling layer we reshape them into a fixed size so that it can be fed into a fully connected layer. From the RoI feature vector, we use a softmax layer to predict the class of the proposed region and also the offset values for the bounding box.
+  
+  ![image](https://user-images.githubusercontent.com/63558665/121414350-8910e400-c934-11eb-9168-7d42120a6dd3.png)
+
+* Faster R-CNN: Both of the above algorithms(R-CNN & Fast R-CNN) uses selective search to find out the region proposals. Selective search is a slow and time-consuming process affecting the performance of the network. The image is provided as an input to a convolutional network which provides a convolutional feature map. Instead of using selective search algorithm on the feature map to identify the region proposals, a separate network is used to predict the region proposals. The predicted region proposals are then reshaped using a RoI pooling layer which is then used to classify the image within the proposed region and predict the offset values for the bounding boxes.
+
+* Yolo: All of the previous object detection algorithms use regions to localize the object within the image. The network does not look at the complete image. Instead, parts of the image which have high probabilities of containing the object. YOLO or You Only Look Once is an object detection algorithm much different from the region based algorithms seen above. a single convolutional network predicts the bounding boxes and the class probabilities for these boxes.
+* Mask R-CNN: Extension of Faster R-CNN that adds an output model for predicting a mask for each detected object.
+
 
 
