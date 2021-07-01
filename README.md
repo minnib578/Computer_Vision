@@ -225,31 +225,31 @@ number of parameters is 0
          * not zero-centered output
          * an annoyance
          * Dead ReLU will never activate and no update weight
-      * LeakyReLU: f(x)=max(0.001x,x)
+     * LeakyReLU: f(x)=max(0.001x,x)
          * not saturate (in +region)
          * computation efficiently
          * converge mush faster than sigmoid/Tanh in pratice (eg.6x)
          * not zero-centered output
          * will not "die"
          * need to manually setup a
-       * exponential Linear Units (ELU):
+      * exponential Linear Units (ELU):
          * all benefits of ReLU
          * closer to zero mean output
          * negative saturation regime compared with Leakly ReLU add some robutness to noise
          * computation require exp()
-       * Parametric Rectifier（PReLU)
+      * Parametric Rectifier（PReLU)
           f(x)=max(ax,x)
-       * Scaled Exponential Linear Units (SELU): scale the output
+      * Scaled Exponential Linear Units (SELU): scale the output
            * Scaled versionof ELU that works better for deep networks
            * “Self-normalizing” property
            * Can train deep SELU networks without BatchNorm
            * computation require exp()
-       * Maxout “Neuron”
+      * Maxout “Neuron”
            * Does not have the basic form of dot product ->nonlinearity
            * Generalizes ReLU and Leaky ReLU
            * Linear Regime! Does not saturate! Does not die!
            * Problem: doubles the number of parameters/neuron
-       * Summary:
+      * Summary:
            * Using ReLu be careful with learning rate
            * Don’t use sigmoid or tanh
            * Try out Leaky ReLU / Maxout / ELU / SELU--To squeeze out some marginal gains
