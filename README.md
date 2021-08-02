@@ -205,6 +205,9 @@ number of parameters is 0
     * conv-->ReLu-->pool-->softmax
         
 # Training
+
+Part 1: activation function, data preprocessing, weight initilization, batch normalization, transfer learning
+
 * one time setup: activation functions, preprocessing, weight initialization, regularization, gradient checking
       
    1. activation function
@@ -263,6 +266,7 @@ number of parameters is 0
           * substract per-channel mean and divide by per-channel std (ResNet)
      
      * normalization:Before normalization: classification loss very sensitive to changes in weight matrix; hard to optimize. After normalization: less sensitive to small changes in weights; easier to optimize
+     
       
    3. weight initialization: different initialization point with different model performance with the same parameters
      
@@ -314,7 +318,9 @@ number of parameters is 0
       * Dropconnect: Drop connections between neurons (set weights to 0)
       * Fractional Pooling:Use randomized pooling regions
       * stochastic depth: Skip some layers in the network
-      
+
+Part 2: Paramteres updates schemes( optimizers), learning rate schedules, gradient checking, regularization, babysitting learning, evaluation (ensembles),hyperparameters optimization
+
 5. Improve training error:
    1. Optimizer:
    * Gradient Descent:
